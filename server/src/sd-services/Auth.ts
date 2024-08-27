@@ -1314,9 +1314,13 @@ export class Auth {
       parentSpanInst
     );
     try {
+      const bcrypt = require('bcrypt');
       const updateData = { ...bh.input.body };
       delete updateData._id;
+      const hashedPassword = await bcrypt.hash(updateData.password, 10);
       bh.filter = { _id: bh.input.params._id };
+      updateData.password = hashedPassword;
+      delete updateData.confirmPassword;
       bh.body = { $set: updateData };
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_iMZJWHUSIo0Wev4k(bh, parentSpanInst);
