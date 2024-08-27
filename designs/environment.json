@@ -1,0 +1,62 @@
+{
+    "TYPE": {
+        "name": "TYPE",
+        "properties": {
+            "production": "client",
+            "ssdURL": "client",
+            "tenantName": "client",
+            "appName": "client",
+            "namespace": "client",
+            "useDefaultExceptionUI": "client",
+            "isIDSEnabled": "client",
+            "SSD_BASE_PATH": "server",
+            "SSD_DEFAULT_PORT": "server",
+            "webAppMountpoint": "both",
+            "CLOCK_TOLERANCE": "server",
+            "NGFORAGE_MOBILE_DRIVER": "client",
+            "deadOrAliveDB": "server",
+            "gmail_userid": "server",
+            "gmail_appPassword": "server"
+        }
+    },
+    "dev": {
+        "name": "dev",
+        "properties": {
+            "production": false,
+            "ssdURL": "http://localhost:8081/api/",
+            "tenantName": "neutrinos-delivery",
+            "appName": "dead-or-alive-backend",
+            "namespace": "com.neutrinos-delivery.dead-or-alive-backend",
+            "useDefaultExceptionUI": true,
+            "isIDSEnabled": "false",
+            "SSD_BASE_PATH": "/api",
+            "SSD_DEFAULT_PORT": "8081",
+            "webAppMountpoint": "web",
+            "CLOCK_TOLERANCE": "5",
+            "NGFORAGE_MOBILE_DRIVER": "INDEXED_DB",
+            "deadOrAliveDB": "mongodb://localhost:27017/DeadOrAlive",
+            "gmail_userid": "edwardthupane80@gmail.com",
+            "gmail_appPassword": "jimz ysri ffqn ctik"
+        }
+    },
+    "prod": {
+        "name": "prod",
+        "properties": {
+            "production": true,
+            "ssdURL": "http://localhost:8081/api/",
+            "tenantName": "neutrinos-delivery",
+            "appName": "dead-or-alive-backend",
+            "namespace": "com.neutrinos-delivery.dead-or-alive-backend",
+            "useDefaultExceptionUI": true,
+            "isIDSEnabled": "false",
+            "SSD_BASE_PATH": "/api",
+            "SSD_DEFAULT_PORT": "8081",
+            "webAppMountpoint": "web",
+            "CLOCK_TOLERANCE": "5",
+            "NGFORAGE_MOBILE_DRIVER": "INDEXED_DB",
+            "deadOrAliveDB": "mongodb://localhost:27017/DeadOrAlive",
+            "gmail_userid": "edwardthupane80@gmail.com",
+            "gmail_appPassword": "jimz ysri ffqn ctik"
+        }
+    }
+}

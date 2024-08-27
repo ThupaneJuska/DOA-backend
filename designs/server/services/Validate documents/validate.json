@@ -1,0 +1,243 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "type": "tab",
+        "createdDate": "2024-08-27T08:23:54.707Z",
+        "label": "validate",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "validate",
+        "relativeParentPath": "Validate documents"
+    },
+    {
+        "id": "sd_0jWjsaH89UBrz127",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Validate ID",
+        "path": "/validate-id",
+        "uploadpath": "\"file\"",
+        "summary": "",
+        "description": "",
+        "method": "post",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": true,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": {
+            "type": "path",
+            "fileOptions": [
+                {
+                    "name": "file",
+                    "maxCount": 1
+                }
+            ],
+            "path": "\"file\""
+        },
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "fileoptions": [
+                {
+                    "key": "file",
+                    "value": "1",
+                    "rowId": "sd_IiUSEJjTj9GobxCr",
+                    "valid": true
+                }
+            ],
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 120,
+        "wires": [
+            [
+                "sd_wZ84jgXewjpWtL1H"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "file",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "validate",
+        "functionName": "sd_0jWjsaH89UBrz127"
+    },
+    {
+        "id": "sd_wZ84jgXewjpWtL1H",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const Tesseract = require('tesseract.js');\nbh.filePath = bh.input.files.file[0].path\nbh.match;\nfunction data() {\n    return new Promise(async (resolve, reject) => {\n        await Tesseract.recognize(\n            bh.filePath,\n            'eng',\n            { logger: m => console.log(m) }\n        ).then(({ data: { text } }) => {\n            const pattern = /\\b\\d{13}\\b/g;\n            const matches = text.match(pattern);\n            bh.match = matches\n           \n            resolve()\n        }).catch(err => {\n            console.log(\"Error reading Image\", err);\n            rejecte()\n        });\n    })\n}\n\nawait data();\nconsole.log(\"bh matches ID\", bh.match)",
+        "functionName": "sd_wZ84jgXewjpWtL1H",
+        "category": "Function",
+        "x": 125,
+        "y": 120,
+        "wires": [
+            [
+                "sd_f5RkNajEO7WBLBMr"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_f5RkNajEO7WBLBMr",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "match",
+        "propertyType": "bh",
+        "propertyGv": "bh.match",
+        "rules": [
+            {
+                "t": "nempty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_f5RkNajEO7WBLBMr",
+        "category": "Function",
+        "x": 205,
+        "y": 120,
+        "wires": [
+            [
+                "sd_wC2sbWsFY0JkoyXT"
+            ],
+            [
+                "sd_SDjqm9P1Gf57KMZS"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_wC2sbWsFY0JkoyXT",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(\"Valid ID\")\nbh.result = {\n    message:\"ID Is Valid\"\n}",
+        "functionName": "sd_wC2sbWsFY0JkoyXT",
+        "category": "Function",
+        "x": 325,
+        "y": 80,
+        "wires": [
+            [
+                "sd_AknA2hzjC1MaFJIX"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_SDjqm9P1Gf57KMZS",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(\"InValid ID\")\nbh.result = {\n    message:\"ID Is InValid\"\n}",
+        "functionName": "sd_SDjqm9P1Gf57KMZS",
+        "category": "Function",
+        "x": 325,
+        "y": 160,
+        "wires": [
+            [
+                "sd_AknA2hzjC1MaFJIX"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_AknA2hzjC1MaFJIX",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_AknA2hzjC1MaFJIX",
+        "category": "HTTP",
+        "x": 460,
+        "y": 120,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    }
+]

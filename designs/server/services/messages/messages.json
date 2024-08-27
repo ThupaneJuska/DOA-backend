@@ -1,0 +1,958 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "type": "tab",
+        "createdDate": "2024-08-20T07:42:56.992Z",
+        "label": "messages",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "messages",
+        "relativeParentPath": "messages"
+    },
+    {
+        "id": "sd_EcmqojPA9tXlB6mc",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Send message",
+        "path": "/send-message",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "post",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": "",
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 60,
+        "wires": [
+            [
+                "sd_JzXvMCJ9u5fGqI1b"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "messages",
+        "functionName": "sd_EcmqojPA9tXlB6mc"
+    },
+    {
+        "id": "sd_06WsiCCkJWF4Fz8c",
+        "type": "Mongodb",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_PhRLzlckwjzX0TdC",
+        "collection": "\"messages\"",
+        "options": "bh.option",
+        "resultMapping": "bh.result",
+        "operation": "insertOne",
+        "argumentArray": [
+            "document",
+            "options"
+        ],
+        "aggregate": "",
+        "operations": "",
+        "query": "bh",
+        "fieldOrSpec": "",
+        "filter": "",
+        "key": "",
+        "docId": "",
+        "indexName": "",
+        "replacement": "",
+        "update": "",
+        "xAxis": "",
+        "yAxis": "",
+        "indexes": "",
+        "docs": "",
+        "document": "bh.input.body",
+        "newName": "",
+        "doc": "",
+        "filePath": "",
+        "fileName": "",
+        "pipeline": "",
+        "functionName": "sd_06WsiCCkJWF4Fz8c",
+        "category": "Storage",
+        "x": 445,
+        "y": 60,
+        "wires": [
+            [
+                "sd_aARdHUS71BnEyope"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "collection": {
+                "type": "str",
+                "value": "messages",
+                "constant": false
+            },
+            "options": {
+                "type": "bh",
+                "value": "option",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "constant": false
+            },
+            "query": {
+                "type": "bh",
+                "value": "",
+                "constant": false
+            },
+            "document": {
+                "type": "bh",
+                "value": "input.body",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_aARdHUS71BnEyope",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_aARdHUS71BnEyope",
+        "category": "HTTP",
+        "x": 545,
+        "y": 60,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_JzXvMCJ9u5fGqI1b",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.input.body['_id'] = (new Date().getTime()).toString()",
+        "functionName": "sd_JzXvMCJ9u5fGqI1b",
+        "category": "Function",
+        "x": 125,
+        "y": 60,
+        "wires": [
+            [
+                "sd_3Xp8ZsvyERJHB3rN"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_skM3KglZayS3WOl9",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Get messages",
+        "path": "/get-messages",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "get",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": "",
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 160,
+        "wires": [
+            [
+                "sd_BmpStsMzQUqJroBI"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "messages",
+        "functionName": "sd_skM3KglZayS3WOl9"
+    },
+    {
+        "id": "sd_BmpStsMzQUqJroBI",
+        "type": "Mongodb",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_PhRLzlckwjzX0TdC",
+        "collection": "\"messages\"",
+        "options": "bh.option",
+        "resultMapping": "bh.result",
+        "operation": "find",
+        "argumentArray": [
+            "query",
+            "options"
+        ],
+        "aggregate": "",
+        "operations": "",
+        "query": "bh.query",
+        "fieldOrSpec": "",
+        "filter": "",
+        "key": "",
+        "docId": "",
+        "indexName": "",
+        "replacement": "",
+        "update": "",
+        "xAxis": "",
+        "yAxis": "",
+        "indexes": "",
+        "docs": "",
+        "document": "",
+        "newName": "",
+        "doc": "",
+        "filePath": "",
+        "fileName": "",
+        "pipeline": "",
+        "functionName": "sd_BmpStsMzQUqJroBI",
+        "category": "Storage",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "sd_oRW1jiXJwTk8rRxu"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "collection": {
+                "type": "str",
+                "value": "messages",
+                "constant": false
+            },
+            "options": {
+                "type": "bh",
+                "value": "option",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "constant": false
+            },
+            "query": {
+                "type": "bh",
+                "value": "query",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_oRW1jiXJwTk8rRxu",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "cookies": [],
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_oRW1jiXJwTk8rRxu",
+        "category": "HTTP",
+        "x": 240,
+        "y": 160,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_hF7x1k9mT5EfXn9e",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "delete message",
+        "path": "/delete-message/:_id",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "delete",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": "",
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 260,
+        "wires": [
+            [
+                "sd_5CocpaIi45WHSQ6r"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "messages",
+        "functionName": "sd_hF7x1k9mT5EfXn9e"
+    },
+    {
+        "id": "sd_5CocpaIi45WHSQ6r",
+        "type": "Mongodb",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_PhRLzlckwjzX0TdC",
+        "collection": "\"messages\"",
+        "options": "bh.option",
+        "resultMapping": "bh.result",
+        "operation": "deleteOne",
+        "argumentArray": [
+            "filter",
+            "options"
+        ],
+        "aggregate": "",
+        "operations": "",
+        "query": "bh",
+        "fieldOrSpec": "",
+        "filter": "bh.input.params",
+        "key": "",
+        "docId": "",
+        "indexName": "",
+        "replacement": "",
+        "update": "",
+        "xAxis": "",
+        "yAxis": "",
+        "indexes": "",
+        "docs": "",
+        "document": "",
+        "newName": "",
+        "doc": "",
+        "filePath": "",
+        "fileName": "",
+        "pipeline": "",
+        "functionName": "sd_5CocpaIi45WHSQ6r",
+        "category": "Storage",
+        "x": 145,
+        "y": 260,
+        "wires": [
+            [
+                "sd_dihuyPOWbDTFrQIs"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "collection": {
+                "type": "str",
+                "value": "messages",
+                "constant": false
+            },
+            "options": {
+                "type": "bh",
+                "value": "option",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "constant": false
+            },
+            "query": {
+                "type": "bh",
+                "value": "",
+                "constant": false
+            },
+            "filter": {
+                "type": "bh",
+                "value": "input.params",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_dihuyPOWbDTFrQIs",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "cookies": [],
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_dihuyPOWbDTFrQIs",
+        "category": "HTTP",
+        "x": 245,
+        "y": 260,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_2YglAfLNVMgZZbro",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Update message",
+        "path": "/update-message/:_id",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "put",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": "",
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 380,
+        "wires": [
+            [
+                "sd_SLAnyiLt0gnE0mZx"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "messages",
+        "functionName": "sd_2YglAfLNVMgZZbro"
+    },
+    {
+        "id": "sd_SLAnyiLt0gnE0mZx",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const dataToUpdate = {...bh.input.body}\ndelete dataToUpdate._id\nbh.filter = {\"_id\":bh.input.params._id}\nbh.body = {$set: dataToUpdate}",
+        "functionName": "sd_SLAnyiLt0gnE0mZx",
+        "category": "Function",
+        "x": 145,
+        "y": 380,
+        "wires": [
+            [
+                "sd_7Z3Wg1MSocck2lyu"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_7Z3Wg1MSocck2lyu",
+        "type": "Mongodb",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_PhRLzlckwjzX0TdC",
+        "collection": "\"messages\"",
+        "options": "bh.option",
+        "resultMapping": "bh.result",
+        "operation": "updateOne",
+        "argumentArray": [
+            "filter",
+            "update",
+            "options"
+        ],
+        "aggregate": "",
+        "operations": "",
+        "query": "bh",
+        "fieldOrSpec": "",
+        "filter": "bh.filter",
+        "key": "",
+        "docId": "",
+        "indexName": "",
+        "replacement": "",
+        "update": "bh.body",
+        "xAxis": "",
+        "yAxis": "",
+        "indexes": "",
+        "docs": "",
+        "document": "",
+        "newName": "",
+        "doc": "",
+        "filePath": "",
+        "fileName": "",
+        "pipeline": "",
+        "functionName": "sd_7Z3Wg1MSocck2lyu",
+        "category": "Storage",
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "sd_wc9HFSyLHjQYVXkz"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "collection": {
+                "type": "str",
+                "value": "messages",
+                "constant": false
+            },
+            "options": {
+                "type": "bh",
+                "value": "option",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "constant": false
+            },
+            "query": {
+                "type": "bh",
+                "value": "",
+                "constant": false
+            },
+            "filter": {
+                "type": "bh",
+                "value": "filter",
+                "constant": false
+            },
+            "update": {
+                "type": "bh",
+                "value": "body",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_wc9HFSyLHjQYVXkz",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "cookies": [],
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_wc9HFSyLHjQYVXkz",
+        "category": "HTTP",
+        "x": 340,
+        "y": 380,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_3Xp8ZsvyERJHB3rN",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.payload = {\n    to: bh.input.body.email,\n    subject: bh.input.body.title,\n    from:bh.input.body.email,\n    ptag:`\n    <p> From ${bh.input.body.email} <br> ${bh.input.body.message}</p>\n    <img src=\"https://static.wikia.nocookie.net/logopedia/images/b/b1/Doa.png/revision/latest?cb=20140212160623\" width=\"300px\" height=\"80px\"/>`\n}",
+        "functionName": "sd_3Xp8ZsvyERJHB3rN",
+        "category": "Function",
+        "x": 220,
+        "y": 60,
+        "wires": [
+            [
+                "sd_0KUO13uYUPRJn9CR"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_0KUO13uYUPRJn9CR",
+        "type": "EmailOut",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "emailoutconfig": "sd_iDQBGLLAH9RTJrO8",
+        "from": "bh.payload.from",
+        "to": "bh.payload.to",
+        "cc": "undefined",
+        "bcc": "undefined",
+        "subject": "bh.payload.subject",
+        "body": "undefined",
+        "html": "bh.payload.ptag",
+        "attachmentList": {},
+        "switchStates": {
+            "attachment": "Map"
+        },
+        "editableListData": {},
+        "routingoptions": "undefined",
+        "iCal": "undefined",
+        "contentoptions": "undefined",
+        "headeroptions": "undefined",
+        "securityoptions": "undefined",
+        "outputs": 1,
+        "resultMapping": "bh.result",
+        "functionName": "sd_0KUO13uYUPRJn9CR",
+        "category": "Messaging",
+        "x": 340,
+        "y": 60,
+        "wires": [
+            [
+                "sd_06WsiCCkJWF4Fz8c"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "from": {
+                "type": "bh",
+                "value": "payload.from",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "to": {
+                "type": "bh",
+                "value": "payload.to",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "cc": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "bcc": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "subject": {
+                "type": "bh",
+                "value": "payload.subject",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "body": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "html": {
+                "type": "bh",
+                "value": "payload.ptag",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "routingoptions": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "iCal": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "contentoptions": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "headeroptions": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "securityoptions": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "nullable": "true",
+                "nullableValue": "undefined",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    }
+]

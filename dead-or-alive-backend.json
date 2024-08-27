@@ -1,0 +1,13 @@
+{
+    "displayName": "dead-or-alive-backend",
+    "appName": "dead-or-alive-backend",
+    "description": "Apis for dead or alive funeral parlour",
+    "lastModified": "2024-08-16T11:33:12.611Z",
+    "imgSourcePath": "",
+    "version": "1.0.0",
+    "appType": "apiOnly",
+    "templateName": "blank",
+    "createDate": "2024-08-16T11:33:10.104Z",
+    "analyticsId": "268bc8e5-3590-ea26-dc89-cdadadd89780",
+    "createdStudioVersion": "9.2.1"
+}
