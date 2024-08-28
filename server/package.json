@@ -85,6 +85,7 @@
         "pg": "8.7.3",
         "prom-client": "14.1.0",
         "query-string": "7.1.1",
+        "sharp": "0.33.5",
         "strong-soap": "3.4.0",
         "swagger-stats": "0.99.2",
         "swagger-ui-express": "4.5.0",

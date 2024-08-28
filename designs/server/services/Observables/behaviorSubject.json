@@ -1,0 +1,87 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp",
+        "type": "tab",
+        "createdDate": "2024-08-28T12:20:05.166Z",
+        "label": "behaviorSubject",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "behaviorSubject",
+        "relativeParentPath": "Observables"
+    },
+    {
+        "id": "sd_fGUllc6fzqZP1z1U",
+        "type": "Start",
+        "z": "SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp",
+        "viewType": "client-server",
+        "nodeType": "start",
+        "name": "emit",
+        "outputs": 1,
+        "inputVariables": [],
+        "localVariables": [],
+        "accept_bh": false,
+        "functionName": "emit",
+        "category": "General",
+        "x": 80,
+        "y": 80,
+        "wires": [
+            [
+                "sd_8EhpONUkjzZvzPu9"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "behaviorSubject"
+    },
+    {
+        "id": "sd_8EhpONUkjzZvzPu9",
+        "type": "emit",
+        "z": "SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "eventName": "bh.web",
+        "functionName": "sd_8EhpONUkjzZvzPu9",
+        "category": "Events",
+        "x": 185,
+        "y": 80,
+        "wires": [
+            [
+                "sd_3wGjBqLQPC4hkFKQ"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "eventName": {
+                "type": "bh",
+                "value": "web",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "behaviorSubject",
+        "generated": true
+    },
+    {
+        "id": "sd_3wGjBqLQPC4hkFKQ",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(bh.web)",
+        "functionName": "sd_3wGjBqLQPC4hkFKQ",
+        "category": "Function",
+        "x": 300,
+        "y": 80,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "behaviorSubject",
+        "generated": true
+    }
+]
