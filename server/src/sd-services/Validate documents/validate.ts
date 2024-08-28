@@ -116,6 +116,43 @@ export class validate {
         this.generatedMiddlewares
       )
     );
+
+    this.app['post'](
+      `${this.serviceBasePath}/death-form`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+      this.sdService.multipartParser({
+        type: 'path',
+        path: 'file'.replace(/\\|\//g, sep),
+        options: [{ name: 'file', maxCount: 1 }],
+      }),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_JflaU2UEJEghDS4A(bh, parentSpanInst);
+          //appendnew_next_sd_9CJpCeKNoHWIoYOL
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_9CJpCeKNoHWIoYOL');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_validate_HttpIn
   }
   //   service flows_validate
@@ -255,6 +292,84 @@ export class validate {
         'sd_SDjqm9P1Gf57KMZS',
         spanInst,
         'sd_SDjqm9P1Gf57KMZS'
+      );
+    }
+  }
+
+  async sd_JflaU2UEJEghDS4A(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_JflaU2UEJEghDS4A',
+      parentSpanInst
+    );
+    try {
+      const Tesseract = require('tesseract.js');
+      const pdfLib = require('pdf-lib');
+      const pdfjsLib = require('pdfjsLib');
+      const { convert } = require('pdf-poppler');
+
+      (
+        pdfjsLib as any
+      ).GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
+
+      console.log(bh.input.files.file[0]);
+      bh.filePath = bh.input.files.file[0].path
+        ? bh.input.files.file[0].path.toString()
+        : null;
+      if (!bh.filePath) {
+        console.error('File path is null or undefined');
+        // Handle the error accordingly
+      } else {
+        console.log('File found', bh.filePath);
+      }
+
+      async function convertPdfToImages(pdfPath) {
+        const outputImages = await convert(pdfPath, { format: 'png' });
+        console.log('OUtput image', outputImages);
+        return outputImages;
+      }
+
+      convertPdfToImages(bh.filePath);
+
+      // async function data() {
+      //     return new Promise(async (resolve, reject) => {
+      //         try {
+      //             const images = await convertPdfToImages("file\\2af850363538c131389fe97e622a8588");
+      //             console.log("Images data",images)
+
+      //             // let allText = '';
+
+      //             // for (const image of images) {
+      //             //     const { data: { text } } = await Tesseract.recognize(
+      //             //         image,
+      //             //         'eng',
+      //             //         { logger: m => console.log(m) }
+      //             //     );
+      //             //     console.log("Data", text)
+      //             //     // allText += text;
+      //             // }
+
+      //             resolve();
+      //         } catch (err) {
+      //             console.log("Error reading PDF", err);
+      //             reject(err);
+      //         }
+      //     });
+      // }
+
+      // (async () => {
+      //     await data();
+      //     console.log("bh matches ID", bh.match);
+      // })();
+      this.tracerService.sendData(spanInst, bh);
+      //appendnew_next_sd_JflaU2UEJEghDS4A
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_JflaU2UEJEghDS4A',
+        spanInst,
+        'sd_JflaU2UEJEghDS4A'
       );
     }
   }
