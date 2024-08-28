@@ -239,5 +239,98 @@
         "generateNext": false,
         "serviceName": "validate",
         "generated": true
+    },
+    {
+        "id": "sd_9CJpCeKNoHWIoYOL",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Death Form",
+        "path": "/death-form",
+        "uploadpath": "\"file\"",
+        "summary": "",
+        "description": "",
+        "method": "post",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": true,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "uploadFileOptions": {
+            "type": "path",
+            "fileOptions": [
+                {
+                    "name": "file",
+                    "maxCount": 1
+                }
+            ],
+            "path": "\"file\""
+        },
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "fileoptions": [
+                {
+                    "key": "file",
+                    "value": "1",
+                    "rowId": "sd_cdPcsZfvoPKrLndt",
+                    "valid": true
+                }
+            ],
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 45,
+        "y": 280,
+        "wires": [
+            [
+                "sd_JflaU2UEJEghDS4A"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "file",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "validate",
+        "functionName": "sd_9CJpCeKNoHWIoYOL"
+    },
+    {
+        "id": "sd_JflaU2UEJEghDS4A",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const Tesseract = require('tesseract.js');\nconst pdfLib = require('pdf-lib');\nconst pdfjsLib = require('pdfjsLib');  \nconst { convert } = require('pdf-poppler');\n\n (pdfjsLib as any).GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;\n\nconsole.log(bh.input.files.file[0])\nbh.filePath = bh.input.files.file[0].path ? bh.input.files.file[0].path.toString() : null;\nif (!bh.filePath) {\n    console.error(\"File path is null or undefined\");\n    // Handle the error accordingly\n}else{\n    console.log(\"File found\", bh.filePath)\n}\n\n\nasync function convertPdfToImages(pdfPath) {\n    const outputImages = await convert(pdfPath, { format: 'png' });\n    console.log(\"OUtput image\", outputImages)\n    return outputImages;\n}\n\nconvertPdfToImages(bh.filePath)\n\n// async function data() {\n//     return new Promise(async (resolve, reject) => {\n//         try {\n//             const images = await convertPdfToImages(\"file\\\\2af850363538c131389fe97e622a8588\");\n//             console.log(\"Images data\",images)\n\n//             // let allText = '';\n\n//             // for (const image of images) {\n//             //     const { data: { text } } = await Tesseract.recognize(\n//             //         image,\n//             //         'eng',\n//             //         { logger: m => console.log(m) }\n//             //     );\n//             //     console.log(\"Data\", text)\n//             //     // allText += text;\n//             // }\n\n\n//             resolve();\n//         } catch (err) {\n//             console.log(\"Error reading PDF\", err);\n//             reject(err);\n//         }\n//     });\n// }\n\n// (async () => {\n//     await data();\n//     console.log(\"bh matches ID\", bh.match);\n// })();",
+        "functionName": "sd_JflaU2UEJEghDS4A",
+        "category": "Function",
+        "x": 160,
+        "y": 280,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
     }
 ]

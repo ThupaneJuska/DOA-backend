@@ -375,6 +375,38 @@ export class Auth {
         this.generatedMiddlewares
       )
     );
+
+    this.app['put'](
+      `${this.serviceBasePath}/update-user/:_id`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_RMj3iRyqZNP0sp6b(bh, parentSpanInst);
+          //appendnew_next_sd_nit291a8f5hvYxW4
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_nit291a8f5hvYxW4');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_Auth_HttpIn
   }
   //   service flows_Auth
@@ -1043,6 +1075,7 @@ export class Auth {
       const bcrypt = require('bcrypt');
       delete bh.input.body.file2;
       const hashedPassword = await bcrypt.hash(bh.input.body['password'], 10);
+      bh.sendPassword = bh.input.body.password;
       bh.input.body['password'] = hashedPassword;
       bh.body = bh.input.body;
       this.tracerService.sendData(spanInst, bh);
@@ -1320,7 +1353,6 @@ export class Auth {
       const hashedPassword = await bcrypt.hash(updateData.password, 10);
       bh.filter = { _id: bh.input.params._id };
       updateData.password = hashedPassword;
-      delete updateData.confirmPassword;
       bh.body = { $set: updateData };
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_iMZJWHUSIo0Wev4k(bh, parentSpanInst);
@@ -1616,6 +1648,70 @@ export class Auth {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_vkYXatluSE0gu38L');
+    }
+  }
+
+  async sd_RMj3iRyqZNP0sp6b(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_RMj3iRyqZNP0sp6b',
+      parentSpanInst
+    );
+    try {
+      const updateData = { ...bh.input.body };
+      delete updateData._id;
+      bh.filter = { _id: bh.input.params._id };
+      bh.body = { $set: updateData };
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_b10YqB3fYvJNtU0I(bh, parentSpanInst);
+      //appendnew_next_sd_RMj3iRyqZNP0sp6b
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_RMj3iRyqZNP0sp6b',
+        spanInst,
+        'sd_RMj3iRyqZNP0sp6b'
+      );
+    }
+  }
+
+  async sd_b10YqB3fYvJNtU0I(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_b10YqB3fYvJNtU0I',
+      parentSpanInst
+    );
+    try {
+      bh.result = await MongoPersistance.getInstance().updateOne(
+        'sd_PhRLzlckwjzX0TdC',
+        'users',
+        bh.input.params,
+        bh.body,
+        bh.option,
+        bh.option
+      );
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_5rWnAHoOPX5HGrGC(bh, parentSpanInst);
+      //appendnew_next_sd_b10YqB3fYvJNtU0I
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_b10YqB3fYvJNtU0I',
+        spanInst,
+        'sd_b10YqB3fYvJNtU0I'
+      );
+    }
+  }
+
+  async sd_5rWnAHoOPX5HGrGC(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_5rWnAHoOPX5HGrGC');
     }
   }
 
