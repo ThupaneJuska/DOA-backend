@@ -141,7 +141,7 @@ export class validate {
             next
           );
           let parentSpanInst = null;
-          bh = await this.sd_JflaU2UEJEghDS4A(bh, parentSpanInst);
+          bh = await this.sd_d9xy6XVwubzp0A0U(bh, parentSpanInst);
           //appendnew_next_sd_9CJpCeKNoHWIoYOL
         } catch (e) {
           return await this.errorHandler(bh, e, 'sd_9CJpCeKNoHWIoYOL');
@@ -296,6 +296,61 @@ export class validate {
     }
   }
 
+  async sd_d9xy6XVwubzp0A0U(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_d9xy6XVwubzp0A0U',
+      parentSpanInst
+    );
+    try {
+      bh.fileType = bh.input.files.file[0].mimetype;
+      console.log('Files', bh.fileType);
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_xhnKQUzRbmpmelIi(bh, parentSpanInst);
+      //appendnew_next_sd_d9xy6XVwubzp0A0U
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_d9xy6XVwubzp0A0U',
+        spanInst,
+        'sd_d9xy6XVwubzp0A0U'
+      );
+    }
+  }
+
+  async sd_xhnKQUzRbmpmelIi(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_xhnKQUzRbmpmelIi',
+      parentSpanInst
+    );
+    try {
+      if (
+        this.sdService.operators['eq'](
+          bh.fileType,
+          'application/pdf',
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sd_JflaU2UEJEghDS4A(bh, parentSpanInst);
+      } else {
+        bh = await this.sd_sBBGO1AZ2UR5s3jE(bh, parentSpanInst);
+      }
+      this.tracerService.sendData(spanInst, bh);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_xhnKQUzRbmpmelIi',
+        spanInst,
+        'sd_xhnKQUzRbmpmelIi'
+      );
+    }
+  }
+
   async sd_JflaU2UEJEghDS4A(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
       'sd_JflaU2UEJEghDS4A',
@@ -303,64 +358,83 @@ export class validate {
     );
     try {
       const Tesseract = require('tesseract.js');
-      const pdfLib = require('pdf-lib');
-      const pdfjsLib = require('pdfjsLib');
-      const { convert } = require('pdf-poppler');
+      const poppler = require('pdf-poppler');
+      const path = require('path');
+      const fs = require('fs').promises;
+      const sharp = require('sharp');
+      const { exec } = require('child_process');
 
-      (
-        pdfjsLib as any
-      ).GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
+      bh.filePath = bh.input.files.file[0].path;
 
-      console.log(bh.input.files.file[0]);
-      bh.filePath = bh.input.files.file[0].path
-        ? bh.input.files.file[0].path.toString()
-        : null;
-      if (!bh.filePath) {
-        console.error('File path is null or undefined');
-        // Handle the error accordingly
-      } else {
-        console.log('File found', bh.filePath);
+      function containsPhrases(text, phrases) {
+        console.log('here');
+        return phrases.some((phrase) => text.includes(phrase));
       }
 
-      async function convertPdfToImages(pdfPath) {
-        const outputImages = await convert(pdfPath, { format: 'png' });
-        console.log('OUtput image', outputImages);
-        return outputImages;
+      async function convertPdfToImage(pdfPath) {
+        try {
+          const outputDir = path.dirname(pdfPath);
+          const outputBaseName = path.basename(pdfPath, path.extname(pdfPath));
+
+          const options = {
+            format: 'png',
+            out_dir: outputDir,
+            out_prefix: outputBaseName,
+            page: null,
+          };
+
+          await poppler.convert(pdfPath, options);
+
+          console.log(
+            `PDF pages have been converted to images and saved in ${outputDir}`
+          );
+
+          const files = await fs.readdir(outputDir);
+          const imageFiles = files.filter(
+            (file) => file.startsWith(outputBaseName) && file.endsWith('.png')
+          );
+
+          const promises = imageFiles.map(async (imageFile) => {
+            const imagePath = path.join(outputDir, imageFile);
+
+            console.log(`Processing image: ${imagePath}`);
+
+            try {
+              const {
+                data: { text },
+              } = await Tesseract.recognize(imagePath, 'eng', {
+                logger: (m) => console.log('Extracting'),
+              });
+
+              const phrasesToCheck = ['NOTICE OF DEATH', 'STILL BIRTH'];
+              if (containsPhrases(text, phrasesToCheck)) {
+                bh.match = true;
+                console.log(
+                  'Image contains one or more of the specified phrases.'
+                );
+              } else {
+                bh.match = false;
+                console.log(
+                  'Image does not contain any of the specified phrases.'
+                );
+              }
+              console.log('Here is the text', text);
+            } catch (err) {
+              console.log('Error reading image', err);
+            }
+          });
+
+          await Promise.all(promises);
+        } catch (err) {
+          console.error('Error converting PDF to image:', err);
+        }
       }
+      await convertPdfToImage(bh.filePath);
+      bh.isDeathForm = bh.match;
+      console.log(`Final match status: ${bh.match}`);
 
-      convertPdfToImages(bh.filePath);
-
-      // async function data() {
-      //     return new Promise(async (resolve, reject) => {
-      //         try {
-      //             const images = await convertPdfToImages("file\\2af850363538c131389fe97e622a8588");
-      //             console.log("Images data",images)
-
-      //             // let allText = '';
-
-      //             // for (const image of images) {
-      //             //     const { data: { text } } = await Tesseract.recognize(
-      //             //         image,
-      //             //         'eng',
-      //             //         { logger: m => console.log(m) }
-      //             //     );
-      //             //     console.log("Data", text)
-      //             //     // allText += text;
-      //             // }
-
-      //             resolve();
-      //         } catch (err) {
-      //             console.log("Error reading PDF", err);
-      //             reject(err);
-      //         }
-      //     });
-      // }
-
-      // (async () => {
-      //     await data();
-      //     console.log("bh matches ID", bh.match);
-      // })();
       this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_vPkFFeMZTB1imDRW(bh, parentSpanInst);
       //appendnew_next_sd_JflaU2UEJEghDS4A
       return bh;
     } catch (e) {
@@ -370,6 +444,127 @@ export class validate {
         'sd_JflaU2UEJEghDS4A',
         spanInst,
         'sd_JflaU2UEJEghDS4A'
+      );
+    }
+  }
+
+  async sd_vPkFFeMZTB1imDRW(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_vPkFFeMZTB1imDRW',
+      parentSpanInst
+    );
+    try {
+      if (
+        this.sdService.operators['true'](
+          bh.match,
+          undefined,
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sd_JQrNEJeDcavWF0vm(bh, parentSpanInst);
+      } else if (
+        this.sdService.operators['false'](
+          bh.match,
+          undefined,
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sd_w4svRIubmmeVYpqk(bh, parentSpanInst);
+      }
+      this.tracerService.sendData(spanInst, bh);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_vPkFFeMZTB1imDRW',
+        spanInst,
+        'sd_vPkFFeMZTB1imDRW'
+      );
+    }
+  }
+
+  async sd_JQrNEJeDcavWF0vm(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_JQrNEJeDcavWF0vm',
+      parentSpanInst
+    );
+    try {
+      bh.result = {
+        message: 'Valid Form',
+      };
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_c6OXTC1bnlLJumd5(bh, parentSpanInst);
+      //appendnew_next_sd_JQrNEJeDcavWF0vm
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_JQrNEJeDcavWF0vm',
+        spanInst,
+        'sd_JQrNEJeDcavWF0vm'
+      );
+    }
+  }
+
+  async sd_c6OXTC1bnlLJumd5(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_c6OXTC1bnlLJumd5');
+    }
+  }
+
+  async sd_w4svRIubmmeVYpqk(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_w4svRIubmmeVYpqk',
+      parentSpanInst
+    );
+    try {
+      bh.result = {
+        message: 'Invalid Form',
+      };
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_c6OXTC1bnlLJumd5(bh, parentSpanInst);
+      //appendnew_next_sd_w4svRIubmmeVYpqk
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_w4svRIubmmeVYpqk',
+        spanInst,
+        'sd_w4svRIubmmeVYpqk'
+      );
+    }
+  }
+
+  async sd_sBBGO1AZ2UR5s3jE(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_sBBGO1AZ2UR5s3jE',
+      parentSpanInst
+    );
+    try {
+      bh.result = {
+        message: 'Only PDF Allowed',
+      };
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_c6OXTC1bnlLJumd5(bh, parentSpanInst);
+      //appendnew_next_sd_sBBGO1AZ2UR5s3jE
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_sBBGO1AZ2UR5s3jE',
+        spanInst,
+        'sd_sBBGO1AZ2UR5s3jE'
       );
     }
   }
