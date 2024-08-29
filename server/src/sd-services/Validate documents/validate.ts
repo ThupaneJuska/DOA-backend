@@ -118,7 +118,7 @@ export class validate {
     );
 
     this.app['post'](
-      `${this.serviceBasePath}/death-form`,
+      `${this.serviceBasePath}/verify-doc`,
       cookieParser(),
       this.sdService.getMiddlesWaresBySequenceId(
         null,
@@ -405,8 +405,15 @@ export class validate {
               } = await Tesseract.recognize(imagePath, 'eng', {
                 logger: (m) => console.log('Extracting'),
               });
+              const pattern = /\b\d{13}\b/g;
+              const matches = text.match(pattern);
+              console.log('MAtches ID', matches);
 
-              const phrasesToCheck = ['NOTICE OF DEATH', 'STILL BIRTH'];
+              const phrasesToCheck = [
+                'NOTICE OF DEATH',
+                'STILL BIRTH',
+                'NATIONAL IDENTITY CARD',
+              ];
               if (containsPhrases(text, phrasesToCheck)) {
                 bh.match = true;
                 console.log(

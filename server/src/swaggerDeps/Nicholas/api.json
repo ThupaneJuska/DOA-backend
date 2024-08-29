@@ -24,5 +24,31 @@
                 "api"
             ]
         }
+    },
+    "/log-payment": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "api"
+            ]
+        }
+    },
+    "/get-monthly-payments": {
+        "get": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "api"
+            ]
+        }
     }
 }
