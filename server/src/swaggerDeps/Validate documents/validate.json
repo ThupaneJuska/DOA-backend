@@ -12,5 +12,17 @@
             ]
         }
     },
-    "/death-form": {}
+    "/verify-doc": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "validate"
+            ]
+        }
+    }
 }

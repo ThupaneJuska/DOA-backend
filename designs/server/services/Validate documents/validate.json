@@ -214,6 +214,7 @@
             "send": "bh.result"
         },
         "dataModelIsArray": false,
+        "cookies": [],
         "inputs": 1,
         "outputs": 0,
         "erd": "",
@@ -246,8 +247,8 @@
         "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
         "viewType": "server",
         "nodeType": "start",
-        "name": "Death Form",
-        "path": "/death-form",
+        "name": "Verify Doc",
+        "path": "/verify-doc",
         "uploadpath": "\"file\"",
         "summary": "",
         "description": "",
@@ -293,10 +294,10 @@
         "validateRequestUsingSwaggerDocs": false,
         "category": "HTTP",
         "x": 45,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
-                "sd_JflaU2UEJEghDS4A"
+                "sd_d9xy6XVwubzp0A0U"
             ]
         ],
         "__ssdTypeInputs__": {
@@ -320,13 +321,235 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "const Tesseract = require('tesseract.js');\nconst pdfLib = require('pdf-lib');\nconst pdfjsLib = require('pdfjsLib');  \nconst { convert } = require('pdf-poppler');\n\n (pdfjsLib as any).GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;\n\nconsole.log(bh.input.files.file[0])\nbh.filePath = bh.input.files.file[0].path ? bh.input.files.file[0].path.toString() : null;\nif (!bh.filePath) {\n    console.error(\"File path is null or undefined\");\n    // Handle the error accordingly\n}else{\n    console.log(\"File found\", bh.filePath)\n}\n\n\nasync function convertPdfToImages(pdfPath) {\n    const outputImages = await convert(pdfPath, { format: 'png' });\n    console.log(\"OUtput image\", outputImages)\n    return outputImages;\n}\n\nconvertPdfToImages(bh.filePath)\n\n// async function data() {\n//     return new Promise(async (resolve, reject) => {\n//         try {\n//             const images = await convertPdfToImages(\"file\\\\2af850363538c131389fe97e622a8588\");\n//             console.log(\"Images data\",images)\n\n//             // let allText = '';\n\n//             // for (const image of images) {\n//             //     const { data: { text } } = await Tesseract.recognize(\n//             //         image,\n//             //         'eng',\n//             //         { logger: m => console.log(m) }\n//             //     );\n//             //     console.log(\"Data\", text)\n//             //     // allText += text;\n//             // }\n\n\n//             resolve();\n//         } catch (err) {\n//             console.log(\"Error reading PDF\", err);\n//             reject(err);\n//         }\n//     });\n// }\n\n// (async () => {\n//     await data();\n//     console.log(\"bh matches ID\", bh.match);\n// })();",
+        "script": "const Tesseract = require('tesseract.js');\nconst poppler = require('pdf-poppler');\nconst path = require('path');\nconst fs = require('fs').promises;\nconst sharp = require('sharp');\nconst { exec } = require('child_process');\n\nbh.filePath = bh.input.files.file[0].path;\n\nfunction containsPhrases(text, phrases) {\n    console.log(\"here\");\n    return phrases.some(phrase => text.includes(phrase));\n}\n\nasync function convertPdfToImage(pdfPath) {\n\n    try {\n        const outputDir = path.dirname(pdfPath);\n        const outputBaseName = path.basename(pdfPath, path.extname(pdfPath));\n\n        const options = {\n            format: 'png',\n            out_dir: outputDir,\n            out_prefix: outputBaseName,\n            page: null,\n        };\n\n        await poppler.convert(pdfPath, options);\n\n        console.log(`PDF pages have been converted to images and saved in ${outputDir}`);\n\n        const files = await fs.readdir(outputDir);\n        const imageFiles = files.filter(file => file.startsWith(outputBaseName) && file.endsWith('.png'));\n\n        const promises = imageFiles.map(async (imageFile) => {\n            const imagePath = path.join(outputDir, imageFile);\n\n            console.log(`Processing image: ${imagePath}`);\n\n            try {\n                const { data: { text } } = await Tesseract.recognize(\n                    imagePath,\n                    'eng',\n                    { logger: m => console.log(\"Extracting\") }\n                );\n                const pattern = /\\b\\d{13}\\b/g;\n                const matches = text.match(pattern);\n                console.log(\"MAtches ID\", matches)\n\n                const phrasesToCheck = [\"NOTICE OF DEATH\", \"STILL BIRTH\",'NATIONAL IDENTITY CARD'];\n                if (containsPhrases(text, phrasesToCheck)) {\n                    bh.match = true;\n                    console.log(\"Image contains one or more of the specified phrases.\");\n                } else {\n                    bh.match = false;\n                    console.log(\"Image does not contain any of the specified phrases.\");\n                }\n                console.log(\"Here is the text\", text);\n            } catch (err) {\n                console.log(\"Error reading image\", err);\n            }\n        });\n\n        await Promise.all(promises);\n\n    } catch (err) {\n        console.error('Error converting PDF to image:', err);\n    }\n}\nawait convertPdfToImage(bh.filePath);\nbh.isDeathForm = bh.match\nconsole.log(`Final match status: ${bh.match}`);\n",
         "functionName": "sd_JflaU2UEJEghDS4A",
         "category": "Function",
-        "x": 125,
-        "y": 280,
+        "x": 325,
+        "y": 260,
         "wires": [
-            []
+            [
+                "sd_vPkFFeMZTB1imDRW"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_vPkFFeMZTB1imDRW",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "match",
+        "propertyType": "bh",
+        "propertyGv": "bh.match",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_vPkFFeMZTB1imDRW",
+        "category": "Function",
+        "x": 405,
+        "y": 260,
+        "wires": [
+            [
+                "sd_JQrNEJeDcavWF0vm"
+            ],
+            [
+                "sd_w4svRIubmmeVYpqk"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_w4svRIubmmeVYpqk",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.result = {\n    message:\"Invalid Form\"\n}",
+        "functionName": "sd_w4svRIubmmeVYpqk",
+        "category": "Function",
+        "x": 505,
+        "y": 300,
+        "wires": [
+            [
+                "sd_c6OXTC1bnlLJumd5"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_JQrNEJeDcavWF0vm",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.result = {\n    message:\"Valid Form\"\n}",
+        "functionName": "sd_JQrNEJeDcavWF0vm",
+        "category": "Function",
+        "x": 505,
+        "y": 220,
+        "wires": [
+            [
+                "sd_c6OXTC1bnlLJumd5"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_c6OXTC1bnlLJumd5",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "cookies": [],
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_c6OXTC1bnlLJumd5",
+        "category": "HTTP",
+        "x": 625,
+        "y": 360,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_d9xy6XVwubzp0A0U",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "\nbh.fileType = bh.input.files.file[0].mimetype\nconsole.log(\"Files\",bh.fileType)",
+        "functionName": "sd_d9xy6XVwubzp0A0U",
+        "category": "Function",
+        "x": 125,
+        "y": 300,
+        "wires": [
+            [
+                "sd_xhnKQUzRbmpmelIi"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_xhnKQUzRbmpmelIi",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "fileType",
+        "propertyType": "bh",
+        "propertyGv": "bh.fileType",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "application/pdf",
+                "vt": "str",
+                "gv": "\"application/pdf\""
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_xhnKQUzRbmpmelIi",
+        "category": "Function",
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "sd_JflaU2UEJEghDS4A"
+            ],
+            [
+                "sd_sBBGO1AZ2UR5s3jE"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "validate",
+        "generated": true
+    },
+    {
+        "id": "sd_sBBGO1AZ2UR5s3jE",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.result = {\n    message:\"Only PDF Allowed\"\n}",
+        "functionName": "sd_sBBGO1AZ2UR5s3jE",
+        "category": "Function",
+        "x": 325,
+        "y": 360,
+        "wires": [
+            [
+                "sd_c6OXTC1bnlLJumd5"
+            ]
         ],
         "__n_excludedFromValidation__": {},
         "generateNext": false,
