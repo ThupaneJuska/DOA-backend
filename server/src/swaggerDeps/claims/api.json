@@ -1,0 +1,28 @@
+{
+    "/add-claim": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "api"
+            ]
+        }
+    },
+    "/get-claims": {
+        "get": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "api"
+            ]
+        }
+    }
+}
