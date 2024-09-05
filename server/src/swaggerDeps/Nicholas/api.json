@@ -50,5 +50,18 @@
                 "api"
             ]
         }
+    },
+    "/edit-pay": {
+        "put": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "api"
+            ]
+        }
     }
 }
