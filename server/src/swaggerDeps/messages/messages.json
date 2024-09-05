@@ -50,5 +50,42 @@
                 "messages"
             ]
         }
+    },
+    "/add-notification": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "messages"
+            ]
+        },
+        "delete": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "messages"
+            ]
+        }
+    },
+    "/get-notification": {
+        "get": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "messages"
+            ]
+        }
     }
 }
