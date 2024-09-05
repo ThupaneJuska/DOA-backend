@@ -214,7 +214,6 @@
             "send": "bh.result"
         },
         "dataModelIsArray": false,
-        "cookies": [],
         "inputs": 1,
         "outputs": 0,
         "erd": "",
@@ -324,7 +323,7 @@
         "script": "const Tesseract = require('tesseract.js');\nconst poppler = require('pdf-poppler');\nconst path = require('path');\nconst fs = require('fs').promises;\nconst sharp = require('sharp');\nconst { exec } = require('child_process');\n\nbh.filePath = bh.input.files.file[0].path;\n\nfunction containsPhrases(text, phrases) {\n    console.log(\"here\");\n    return phrases.some(phrase => text.includes(phrase));\n}\n\nasync function convertPdfToImage(pdfPath) {\n\n    try {\n        const outputDir = path.dirname(pdfPath);\n        const outputBaseName = path.basename(pdfPath, path.extname(pdfPath));\n\n        const options = {\n            format: 'png',\n            out_dir: outputDir,\n            out_prefix: outputBaseName,\n            page: null,\n        };\n\n        await poppler.convert(pdfPath, options);\n\n        console.log(`PDF pages have been converted to images and saved in ${outputDir}`);\n\n        const files = await fs.readdir(outputDir);\n        const imageFiles = files.filter(file => file.startsWith(outputBaseName) && file.endsWith('.png'));\n\n        const promises = imageFiles.map(async (imageFile) => {\n            const imagePath = path.join(outputDir, imageFile);\n\n            console.log(`Processing image: ${imagePath}`);\n\n            try {\n                const { data: { text } } = await Tesseract.recognize(\n                    imagePath,\n                    'eng',\n                    { logger: m => console.log(\"Extracting\") }\n                );\n                const pattern = /\\b\\d{13}\\b/g;\n                const matches = text.match(pattern);\n                console.log(\"MAtches ID\", matches)\n\n                const phrasesToCheck = [\"NOTICE OF DEATH\", \"STILL BIRTH\",'NATIONAL IDENTITY CARD'];\n                if (containsPhrases(text, phrasesToCheck)) {\n                    bh.match = true;\n                    console.log(\"Image contains one or more of the specified phrases.\");\n                } else {\n                    bh.match = false;\n                    console.log(\"Image does not contain any of the specified phrases.\");\n                }\n                console.log(\"Here is the text\", text);\n            } catch (err) {\n                console.log(\"Error reading image\", err);\n            }\n        });\n\n        await Promise.all(promises);\n\n    } catch (err) {\n        console.error('Error converting PDF to image:', err);\n    }\n}\nawait convertPdfToImage(bh.filePath);\nbh.isDeathForm = bh.match\nconsole.log(`Final match status: ${bh.match}`);\n",
         "functionName": "sd_JflaU2UEJEghDS4A",
         "category": "Function",
-        "x": 325,
+        "x": 365,
         "y": 260,
         "wires": [
             [
@@ -359,7 +358,7 @@
         "outputs": 2,
         "functionName": "sd_vPkFFeMZTB1imDRW",
         "category": "Function",
-        "x": 405,
+        "x": 465,
         "y": 260,
         "wires": [
             [
@@ -384,7 +383,7 @@
         "script": "bh.result = {\n    message:\"Invalid Form\"\n}",
         "functionName": "sd_w4svRIubmmeVYpqk",
         "category": "Function",
-        "x": 505,
+        "x": 565,
         "y": 300,
         "wires": [
             [
@@ -406,7 +405,7 @@
         "script": "bh.result = {\n    message:\"Valid Form\"\n}",
         "functionName": "sd_JQrNEJeDcavWF0vm",
         "category": "Function",
-        "x": 505,
+        "x": 565,
         "y": 220,
         "wires": [
             [
@@ -463,7 +462,7 @@
         },
         "functionName": "sd_c6OXTC1bnlLJumd5",
         "category": "HTTP",
-        "x": 625,
+        "x": 725,
         "y": 360,
         "wires": [],
         "__n_excludedFromValidation__": {},
@@ -519,7 +518,7 @@
         "outputs": 2,
         "functionName": "sd_xhnKQUzRbmpmelIi",
         "category": "Function",
-        "x": 220,
+        "x": 245,
         "y": 300,
         "wires": [
             [
@@ -544,7 +543,7 @@
         "script": "bh.result = {\n    message:\"Only PDF Allowed\"\n}",
         "functionName": "sd_sBBGO1AZ2UR5s3jE",
         "category": "Function",
-        "x": 325,
+        "x": 365,
         "y": 360,
         "wires": [
             [
