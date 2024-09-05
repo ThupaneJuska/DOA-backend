@@ -143,6 +143,70 @@ export class api {
         this.generatedMiddlewares
       )
     );
+
+    this.app['post'](
+      `${this.serviceBasePath}/log-payment`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_xMnypFFgURs3vKDL(bh, parentSpanInst);
+          //appendnew_next_sd_Rm5sxBD1TxKWb8zi
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_Rm5sxBD1TxKWb8zi');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
+
+    this.app['get'](
+      `${this.serviceBasePath}/get-monthly-payments`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_ALbhFFYLVXuOn9E0(bh, parentSpanInst);
+          //appendnew_next_sd_spYjiC6Cs4EZKNoc
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_spYjiC6Cs4EZKNoc');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_api_HttpIn
   }
   //   service flows_api
@@ -278,6 +342,135 @@ export class api {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_FzoTp3y92h58YTth');
+    }
+  }
+
+  async sd_xMnypFFgURs3vKDL(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_xMnypFFgURs3vKDL',
+      parentSpanInst
+    );
+    try {
+      bh.collection = 'monthly_payments';
+      bh.input.body.date = new Date();
+
+      bh.event = bh.input.body.event;
+      bh.amount = bh.input.body.amount;
+
+      if (bh.input.body.event == 'Missed payment') {
+        bh.input.body.amount = 0;
+      }
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_M76v3rXJcxRZZ4Dd(bh, parentSpanInst);
+      //appendnew_next_sd_xMnypFFgURs3vKDL
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_xMnypFFgURs3vKDL',
+        spanInst,
+        'sd_xMnypFFgURs3vKDL'
+      );
+    }
+  }
+
+  async sd_M76v3rXJcxRZZ4Dd(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_M76v3rXJcxRZZ4Dd',
+      parentSpanInst
+    );
+    try {
+      bh.result = await MongoPersistance.getInstance().insertOne(
+        'sd_PhRLzlckwjzX0TdC',
+        bh.collection,
+        bh.input.body,
+        bh.options,
+        bh.options
+      );
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_AiVLyjsp6PnOtU7Q(bh, parentSpanInst);
+      //appendnew_next_sd_M76v3rXJcxRZZ4Dd
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_M76v3rXJcxRZZ4Dd',
+        spanInst,
+        'sd_M76v3rXJcxRZZ4Dd'
+      );
+    }
+  }
+
+  async sd_AiVLyjsp6PnOtU7Q(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_AiVLyjsp6PnOtU7Q');
+    }
+  }
+
+  async sd_ALbhFFYLVXuOn9E0(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_ALbhFFYLVXuOn9E0',
+      parentSpanInst
+    );
+    try {
+      bh.collection = 'monthly_payments';
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_SZh1FyJtUF4w5zbr(bh, parentSpanInst);
+      //appendnew_next_sd_ALbhFFYLVXuOn9E0
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_ALbhFFYLVXuOn9E0',
+        spanInst,
+        'sd_ALbhFFYLVXuOn9E0'
+      );
+    }
+  }
+
+  async sd_SZh1FyJtUF4w5zbr(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_SZh1FyJtUF4w5zbr',
+      parentSpanInst
+    );
+    try {
+      bh.result = await MongoPersistance.getInstance().find(
+        'sd_PhRLzlckwjzX0TdC',
+        bh.collection,
+        bh.query,
+        bh.options,
+        bh.options
+      );
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_NkNFhD1e8JGBytax(bh, parentSpanInst);
+      //appendnew_next_sd_SZh1FyJtUF4w5zbr
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_SZh1FyJtUF4w5zbr',
+        spanInst,
+        'sd_SZh1FyJtUF4w5zbr'
+      );
+    }
+  }
+
+  async sd_NkNFhD1e8JGBytax(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_NkNFhD1e8JGBytax');
     }
   }
 

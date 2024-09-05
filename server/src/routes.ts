@@ -1,4 +1,8 @@
 //CORE_REFERENCE_IMPORTS
+//CORE_REFERENCE_IMPORT-api-SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7
+import { api as SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7 } from './sd-services/claims/api';
+//CORE_REFERENCE_IMPORT-behaviorSubject-SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp
+import { behaviorSubject as SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp } from './sd-services/Observables/behaviorSubject';
 //CORE_REFERENCE_IMPORT-api-SSD_SERVICE_ID_sd_6s2lCJ5QRBD6nGIT
 import { api as SSD_SERVICE_ID_sd_6s2lCJ5QRBD6nGIT } from './sd-services/Nicholas/api';
 //CORE_REFERENCE_IMPORT-validate-SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl
@@ -9,7 +13,11 @@ import { messages as SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC } from './sd-services/me
 import { Auth as SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL } from './sd-services/Auth';
 
 export const UserRoutes = [
-//CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY
+    //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY
+//CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-api-SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7
+SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7,
+//CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-behaviorSubject-SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp
+SSD_SERVICE_ID_sd_UwSGXhKxotyTXMGp,
 //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-api-SSD_SERVICE_ID_sd_6s2lCJ5QRBD6nGIT
 SSD_SERVICE_ID_sd_6s2lCJ5QRBD6nGIT,
 //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-validate-SSD_SERVICE_ID_sd_SmKGdfPXeNu37Xdl
