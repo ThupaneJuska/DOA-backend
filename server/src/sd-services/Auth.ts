@@ -407,6 +407,38 @@ export class Auth {
         this.generatedMiddlewares
       )
     );
+
+    this.app['post'](
+      `${this.serviceBasePath}/download/:filename`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_r5hQbbpPVNe0lQXZ(bh, parentSpanInst);
+          //appendnew_next_sd_znzcslnlnxI1vsNE
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_znzcslnlnxI1vsNE');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_Auth_HttpIn
   }
   //   service flows_Auth
@@ -658,6 +690,7 @@ export class Auth {
     );
     try {
       bh.result = bh.result;
+
       this.tracerService.sendData(spanInst, bh);
       await this.sd_GLaqJCskcCVvIO8J(bh, parentSpanInst);
       //appendnew_next_sd_sC7lG9D8eBGthwno
@@ -1712,6 +1745,44 @@ export class Auth {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_5rWnAHoOPX5HGrGC');
+    }
+  }
+
+  async sd_r5hQbbpPVNe0lQXZ(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_r5hQbbpPVNe0lQXZ',
+      parentSpanInst
+    );
+    try {
+      bh.result = await MongoPersistance.getInstance().downloadFile(
+        'sd_PhRLzlckwjzX0TdC',
+        'files',
+        bh.input.params,
+        bh
+      );
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_bDxNmjojBfqsvXv6(bh, parentSpanInst);
+      //appendnew_next_sd_r5hQbbpPVNe0lQXZ
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_r5hQbbpPVNe0lQXZ',
+        spanInst,
+        'sd_r5hQbbpPVNe0lQXZ'
+      );
+    }
+  }
+
+  async sd_bDxNmjojBfqsvXv6(bh, parentSpanInst) {
+    try {
+      bh.web.res.set({ 'Content-Type': 'image/png' });
+
+      bh.result.downloadStream.pipe(bh.web.res);
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_bDxNmjojBfqsvXv6');
     }
   }
 
