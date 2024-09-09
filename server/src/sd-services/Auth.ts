@@ -408,7 +408,7 @@ export class Auth {
       )
     );
 
-    this.app['post'](
+    this.app['get'](
       `${this.serviceBasePath}/download/:filename`,
       cookieParser(),
       this.sdService.getMiddlesWaresBySequenceId(
