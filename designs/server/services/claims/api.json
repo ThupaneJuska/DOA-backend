@@ -426,5 +426,308 @@
         "generateNext": false,
         "serviceName": "api",
         "generated": true
+    },
+    {
+        "id": "sd_ny8fhj561jXDwL1n",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "Update user",
+        "path": "/update_claim",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "put",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 65,
+        "y": 320,
+        "wires": [
+            [
+                "sd_8vgHhVtnSlWdusUK"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "api",
+        "functionName": "sd_ny8fhj561jXDwL1n"
+    },
+    {
+        "id": "sd_8vgHhVtnSlWdusUK",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const updateData = { ...bh.input.body };\n\nbh.filter = {\"claimNumber\": updateData.claimNumber}\nbh.collection = \"claims\"\n\nbh.search = {\n    ...bh.filter,\n    \"collection\": \"claims\"\n}\n\nconsole.log(\"SEARCH: \", bh.search)\n\nupdateData.status = updateData.deceased.status\ndelete updateData.deceased.status\ndelete updateData._id\n\nbh.body = {$set: updateData}\n\nconsole.log(\"UPDATED DATA: \", bh.body)\nconsole.log(\"Filter: \", bh.filter)",
+        "functionName": "sd_8vgHhVtnSlWdusUK",
+        "category": "Function",
+        "x": 145,
+        "y": 320,
+        "wires": [
+            [
+                "sd_r5fMFLI8hFNJ69gl"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_ny6rh1iPud0sHaY7",
+        "type": "Mongodb",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_PhRLzlckwjzX0TdC",
+        "collection": "bh.collection",
+        "options": "bh.option",
+        "resultMapping": "bh.result",
+        "operation": "findOneAndUpdate",
+        "argumentArray": [
+            "filter",
+            "update",
+            "options"
+        ],
+        "aggregate": "",
+        "operations": "",
+        "query": "bh",
+        "fieldOrSpec": "",
+        "filter": "bh.filter",
+        "key": "",
+        "docId": "",
+        "indexName": "",
+        "replacement": "",
+        "update": "bh.body",
+        "xAxis": "",
+        "yAxis": "",
+        "indexes": "",
+        "docs": "",
+        "document": "",
+        "newName": "",
+        "doc": "",
+        "filePath": "",
+        "fileName": "",
+        "pipeline": "",
+        "functionName": "sd_ny6rh1iPud0sHaY7",
+        "category": "Storage",
+        "x": 345,
+        "y": 320,
+        "wires": [
+            [
+                "sd_x7iVRuFfC2BUT03i"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "collection": {
+                "type": "bh",
+                "value": "collection",
+                "constant": false
+            },
+            "options": {
+                "type": "bh",
+                "value": "option",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh",
+                "value": "result",
+                "constant": false
+            },
+            "query": {
+                "type": "bh",
+                "value": "",
+                "constant": false
+            },
+            "filter": {
+                "type": "bh",
+                "value": "filter",
+                "constant": false
+            },
+            "update": {
+                "type": "bh",
+                "value": "body",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_x7iVRuFfC2BUT03i",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh",
+            "value": "result",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "num",
+            "value": 200,
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": 200,
+            "obj": "bh.result",
+            "send": "bh.result"
+        },
+        "dataModelIsArray": false,
+        "cookies": [],
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_x7iVRuFfC2BUT03i",
+        "category": "HTTP",
+        "x": 425,
+        "y": 320,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_r5fMFLI8hFNJ69gl",
+        "type": "CallService",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 1,
+        "isValidNode": true,
+        "noerr": 0,
+        "service": {
+            "id": "SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL",
+            "type": "tab",
+            "createdDate": "2024-08-18T11:10:02.741Z",
+            "label": "Auth",
+            "disabled": false,
+            "info": "",
+            "functionSeq": 0
+        },
+        "flow": {
+            "flowId": "sd_HQW7MlXCfXknBjYn",
+            "flowName": "checkIfExist"
+        },
+        "inputVariables": [
+            {
+                "key": "searchObj",
+                "map": true,
+                "valueType": "bh",
+                "value": "search"
+            }
+        ],
+        "bhVariables": [],
+        "outputMapping": [
+            {
+                "mapVarType": "local",
+                "key": "result",
+                "valueType": "bh",
+                "value": "foundClaim",
+                "mapVarName": "result",
+                "localVar": "bh.foundClaim"
+            }
+        ],
+        "callService": "../Auth",
+        "startName": "checkIfExist",
+        "inputParams": [
+            "bh.search"
+        ],
+        "accept_bh": false,
+        "functionName": "sd_r5fMFLI8hFNJ69gl",
+        "category": "General",
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "sd_ny6rh1iPud0sHaY7",
+                "sd_j5bgewAfqB0ztWa4"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_j5bgewAfqB0ztWa4",
+        "type": "ServerLog",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 0,
+        "logObject": "bh.foundClaim",
+        "logLevel": "info",
+        "functionName": "sd_j5bgewAfqB0ztWa4",
+        "category": "General",
+        "x": 345,
+        "y": 440,
+        "wires": [],
+        "__ssdTypeInputs__": {
+            "logObject": {
+                "type": "bh",
+                "value": "foundClaim",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
     }
 ]
