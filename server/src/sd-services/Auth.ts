@@ -408,7 +408,7 @@ export class Auth {
       )
     );
 
-    this.app['post'](
+    this.app['get'](
       `${this.serviceBasePath}/download/:filename`,
       cookieParser(),
       this.sdService.getMiddlesWaresBySequenceId(
@@ -994,6 +994,7 @@ export class Auth {
         query: { email: bh.input.body.email },
       };
       bh.input.body['_id'] = new Date().getTime().toString();
+
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_VOv8wSN8p5pUYWBS(bh, parentSpanInst);
       //appendnew_next_sd_Vi6Ftg5Mf4eaD6DX
@@ -1110,6 +1111,7 @@ export class Auth {
       const hashedPassword = await bcrypt.hash(bh.input.body['password'], 10);
       bh.sendPassword = bh.input.body.password;
       bh.input.body['password'] = hashedPassword;
+      bh.input.body['registeredDate'] = new Date().toLocaleDateString();
       bh.body = bh.input.body;
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_9Gv4mFF6jdv5uacF(bh, parentSpanInst);
