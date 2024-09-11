@@ -4,10 +4,12 @@ let instance = null;
 //append_imports_start
 
 import * as cookieParser from 'cookie-parser'; //_splitter_
+import * as safeStringify from 'fast-safe-stringify'; //_splitter_
 import { SDBaseService } from '../../services/SDBaseService'; //_splitter_
 import { TracerService } from '../../services/TracerService'; //_splitter_
 import log from '../../utils/Logger'; //_splitter_
 import { MongoPersistance } from '../../utils/ndefault-mongodb/Mongodb/MongoPersistance'; //_splitter_
+import * as SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL from '../Auth'; //_splitter_
 //append_imports_end
 export class api {
   private sdService = new SDBaseService();
@@ -143,6 +145,38 @@ export class api {
         this.generatedMiddlewares
       )
     );
+
+    this.app['put'](
+      `${this.serviceBasePath}/update_claim`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_8vgHhVtnSlWdusUK(bh, parentSpanInst);
+          //appendnew_next_sd_ny8fhj561jXDwL1n
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_ny8fhj561jXDwL1n');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_api_HttpIn
   }
   //   service flows_api
@@ -267,6 +301,143 @@ export class api {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_Ba2xymnw0nSEWXia');
+    }
+  }
+
+  async sd_8vgHhVtnSlWdusUK(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_8vgHhVtnSlWdusUK',
+      parentSpanInst
+    );
+    try {
+      const updateData = { ...bh.input.body };
+
+      bh.filter = { claimNumber: updateData.claimNumber };
+      bh.collection = 'claims';
+
+      bh.search = {
+        ...bh.filter,
+        collection: 'claims',
+      };
+
+      console.log('SEARCH: ', bh.search);
+
+      updateData.status = updateData.deceased.status;
+      delete updateData.deceased.status;
+      delete updateData._id;
+
+      bh.body = { $set: updateData };
+
+      console.log('UPDATED DATA: ', bh.body);
+      console.log('Filter: ', bh.filter);
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_r5fMFLI8hFNJ69gl(bh, parentSpanInst);
+      //appendnew_next_sd_8vgHhVtnSlWdusUK
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_8vgHhVtnSlWdusUK',
+        spanInst,
+        'sd_8vgHhVtnSlWdusUK'
+      );
+    }
+  }
+
+  async sd_r5fMFLI8hFNJ69gl(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_r5fMFLI8hFNJ69gl',
+      parentSpanInst
+    );
+    try {
+      const SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance: SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth =
+        SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth.getInstance();
+      let outputVariables =
+        await SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance.checkIfExist(
+          spanInst,
+          bh.search
+        );
+      bh.foundClaim = outputVariables.local.result;
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_ny6rh1iPud0sHaY7(bh, parentSpanInst);
+      this.sd_j5bgewAfqB0ztWa4(bh, parentSpanInst);
+      //appendnew_next_sd_r5fMFLI8hFNJ69gl
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_r5fMFLI8hFNJ69gl',
+        spanInst,
+        'sd_r5fMFLI8hFNJ69gl'
+      );
+    }
+  }
+
+  async sd_ny6rh1iPud0sHaY7(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_ny6rh1iPud0sHaY7',
+      parentSpanInst
+    );
+    try {
+      bh.result = await MongoPersistance.getInstance().findOneAndUpdate(
+        'sd_PhRLzlckwjzX0TdC',
+        bh.collection,
+        bh.filter,
+        bh.body,
+        bh.option,
+        bh.option
+      );
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_x7iVRuFfC2BUT03i(bh, parentSpanInst);
+      //appendnew_next_sd_ny6rh1iPud0sHaY7
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_ny6rh1iPud0sHaY7',
+        spanInst,
+        'sd_ny6rh1iPud0sHaY7'
+      );
+    }
+  }
+
+  async sd_x7iVRuFfC2BUT03i(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_x7iVRuFfC2BUT03i');
+    }
+  }
+
+  async sd_j5bgewAfqB0ztWa4(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_j5bgewAfqB0ztWa4',
+      parentSpanInst
+    );
+    try {
+      let logobj: any = bh.foundClaim;
+      if (logobj instanceof Error) {
+        log.info(logobj);
+      } else {
+        log.info(safeStringify.default(logobj));
+      }
+      this.tracerService.sendData(spanInst, bh);
+      //appendnew_next_sd_j5bgewAfqB0ztWa4
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_j5bgewAfqB0ztWa4',
+        spanInst,
+        'sd_j5bgewAfqB0ztWa4'
+      );
     }
   }
 
