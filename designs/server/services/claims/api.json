@@ -45,8 +45,8 @@
         "outputs": 1,
         "validateRequestUsingSwaggerDocs": false,
         "category": "HTTP",
-        "x": 68.75000381469727,
-        "y": 79.76562881469727,
+        "x": 65,
+        "y": 40,
         "wires": [
             [
                 "sd_NlYVbTW63Hleg2OU"
@@ -64,7 +64,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_zm2vJ5zZBorn8Iq1"
+        "functionName": "sd_zm2vJ5zZBorn8Iq1",
+        "generated": false
     },
     {
         "id": "sd_1MsfAovHQUCkaNDE",
@@ -76,8 +77,8 @@
         "script": "bh.payload = bh.input.body\n\nbh.count  = bh.found.length + 1\n\nbh.claimNo = bh.input.body.claimNumber + '-' + bh.count\n\nconsole.log(\"CLAIM NO: \", bh.claimNo)\n\nbh.payload.claimNumber = bh.claimNo\n\nbh.collection = \"claims\";\nbh.payload.date = new Date();\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n",
         "functionName": "sd_1MsfAovHQUCkaNDE",
         "category": "Function",
-        "x": 345,
-        "y": 80,
+        "x": 150,
+        "y": 40,
         "wires": [
             [
                 "sd_CfzW0EE3u9aX9DmX"
@@ -126,8 +127,8 @@
         "pipeline": "",
         "functionName": "sd_CfzW0EE3u9aX9DmX",
         "category": "Storage",
-        "x": 445,
-        "y": 80,
+        "x": 225,
+        "y": 40,
         "wires": [
             [
                 "sd_bFUKlYs5aDknVhst"
@@ -210,8 +211,8 @@
         },
         "functionName": "sd_bFUKlYs5aDknVhst",
         "category": "HTTP",
-        "x": 525,
-        "y": 80,
+        "x": 310,
+        "y": 40,
         "wires": [],
         "__n_excludedFromValidation__": {},
         "generateNext": false,
@@ -253,8 +254,8 @@
         "outputs": 1,
         "validateRequestUsingSwaggerDocs": false,
         "category": "HTTP",
-        "x": 70,
-        "y": 193.515625,
+        "x": 65,
+        "y": 140,
         "wires": [
             [
                 "sd_UQ2eF4vSY8PN9bLM"
@@ -272,7 +273,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ZvXZqmFrqvDEaIAA"
+        "functionName": "sd_ZvXZqmFrqvDEaIAA",
+        "generated": false
     },
     {
         "id": "sd_UQ2eF4vSY8PN9bLM",
@@ -284,8 +286,8 @@
         "script": "bh.collection = \"claims\"",
         "functionName": "sd_UQ2eF4vSY8PN9bLM",
         "category": "Function",
-        "x": 150,
-        "y": 193.515625,
+        "x": 145,
+        "y": 140,
         "wires": [
             [
                 "sd_ZY9QiVfLcBWJSyUD"
@@ -334,8 +336,8 @@
         "pipeline": "",
         "functionName": "sd_ZY9QiVfLcBWJSyUD",
         "category": "Storage",
-        "x": 235,
-        "y": 193.515625,
+        "x": 230,
+        "y": 140,
         "wires": [
             [
                 "sd_Ba2xymnw0nSEWXia"
@@ -418,8 +420,8 @@
         },
         "functionName": "sd_Ba2xymnw0nSEWXia",
         "category": "HTTP",
-        "x": 315,
-        "y": 193.515625,
+        "x": 310,
+        "y": 140,
         "wires": [],
         "__n_excludedFromValidation__": {},
         "generateNext": false,
@@ -480,7 +482,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ny8fhj561jXDwL1n"
+        "functionName": "sd_ny8fhj561jXDwL1n",
+        "generated": false
     },
     {
         "id": "sd_8vgHhVtnSlWdusUK",
@@ -699,9 +702,9 @@
             ]
         ],
         "__n_excludedFromValidation__": {},
+        "generated": true,
         "generateNext": false,
-        "serviceName": "api",
-        "generated": true
+        "serviceName": "api"
     },
     {
         "id": "sd_j5bgewAfqB0ztWa4",
