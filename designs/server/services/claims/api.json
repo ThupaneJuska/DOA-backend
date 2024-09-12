@@ -65,7 +65,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_zm2vJ5zZBorn8Iq1"
+        "functionName": "sd_zm2vJ5zZBorn8Iq1",
+        "generated": false
     },
     {
         "id": "sd_1MsfAovHQUCkaNDE",
@@ -273,7 +274,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ZvXZqmFrqvDEaIAA"
+        "functionName": "sd_ZvXZqmFrqvDEaIAA",
+        "generated": false
     },
     {
         "id": "sd_UQ2eF4vSY8PN9bLM",
@@ -480,7 +482,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ny8fhj561jXDwL1n"
+        "functionName": "sd_ny8fhj561jXDwL1n",
+        "generated": false
     },
     {
         "id": "sd_8vgHhVtnSlWdusUK",
@@ -699,9 +702,9 @@
             ]
         ],
         "__n_excludedFromValidation__": {},
+        "generated": true,
         "generateNext": false,
-        "serviceName": "api",
-        "generated": true
+        "serviceName": "api"
     },
     {
         "id": "sd_j5bgewAfqB0ztWa4",

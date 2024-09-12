@@ -24,5 +24,44 @@
                 "validate"
             ]
         }
+    },
+    "/verify-death-certificate": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "validate"
+            ]
+        }
+    },
+    "/verify-id": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "validate"
+            ]
+        }
+    },
+    "/verify-bank-statement": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "validate"
+            ]
+        }
     }
 }
