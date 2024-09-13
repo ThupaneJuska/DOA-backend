@@ -30,6 +30,7 @@
         "acceptFileUpload": false,
         "useDataModel": false,
         "dataModelIsArray": false,
+        "uploadFileOptions": "",
         "erd": "",
         "erdName": "",
         "entity": "",
@@ -64,8 +65,7 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_zm2vJ5zZBorn8Iq1",
-        "generated": false
+        "functionName": "sd_zm2vJ5zZBorn8Iq1"
     },
     {
         "id": "sd_1MsfAovHQUCkaNDE",
@@ -273,8 +273,7 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ZvXZqmFrqvDEaIAA",
-        "generated": false
+        "functionName": "sd_ZvXZqmFrqvDEaIAA"
     },
     {
         "id": "sd_UQ2eF4vSY8PN9bLM",
@@ -482,8 +481,7 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ny8fhj561jXDwL1n",
-        "generated": false
+        "functionName": "sd_ny8fhj561jXDwL1n"
     },
     {
         "id": "sd_8vgHhVtnSlWdusUK",
@@ -492,7 +490,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "const updateData = { ...bh.input.body };\n\nbh.filter = {\"claimNumber\": updateData.claimNumber}\nbh.collection = \"claims\"\n\nbh.search = {\n    ...bh.filter,\n    \"collection\": \"claims\"\n}\n\nconsole.log(\"SEARCH: \", bh.search)\n\nupdateData.status = updateData.deceased.status\ndelete updateData.deceased.status\ndelete updateData._id\n\nbh.body = {$set: updateData}\n\nconsole.log(\"UPDATED DATA: \", bh.body)\nconsole.log(\"Filter: \", bh.filter)",
+        "script": "const updateData = { ...bh.input.body };\n\nbh.filter = {\"claimNumber\": updateData.claimNumber}\nbh.collection = \"claims\"\n\nbh.search = {\n    ...bh.filter,\n    \"collection\": \"claims\"\n}\n\nconsole.log(\"SEARCH: \", bh.search)\n\nupdateData.status = bh.input.body.status\ndelete updateData.deceased.status\ndelete updateData._id\n\nbh.body = {$set: updateData}\n\nconsole.log(\"UPDATED DATA: \", bh.body)\nconsole.log(\"Filter: \", bh.filter)",
         "functionName": "sd_8vgHhVtnSlWdusUK",
         "category": "Function",
         "x": 145,
@@ -702,9 +700,9 @@
             ]
         ],
         "__n_excludedFromValidation__": {},
-        "generated": true,
         "generateNext": false,
-        "serviceName": "api"
+        "serviceName": "api",
+        "generated": true
     },
     {
         "id": "sd_j5bgewAfqB0ztWa4",

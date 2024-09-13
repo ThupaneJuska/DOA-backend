@@ -396,7 +396,7 @@ export class api {
 
       console.log('SEARCH: ', bh.search);
 
-      updateData.status = updateData.deceased.status;
+      updateData.status = bh.input.body.status;
       delete updateData.deceased.status;
       delete updateData._id;
 
