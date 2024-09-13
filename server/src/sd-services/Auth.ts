@@ -439,6 +439,38 @@ export class Auth {
         this.generatedMiddlewares
       )
     );
+
+    this.app['post'](
+      `${this.serviceBasePath}/checkUser`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          bh = await this.sd_OtvxdLa2NZsZVb18(bh, parentSpanInst);
+          //appendnew_next_sd_V08ATAsPFu5PxjgZ
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_V08ATAsPFu5PxjgZ');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_Auth_HttpIn
   }
   //   service flows_Auth
@@ -1111,6 +1143,7 @@ export class Auth {
       const hashedPassword = await bcrypt.hash(bh.input.body['password'], 10);
       bh.sendPassword = bh.input.body.password;
       bh.input.body['password'] = hashedPassword;
+      bh.input.body['policyActive'] = true;
       bh.input.body['registeredDate'] = new Date().toLocaleDateString();
       bh.body = bh.input.body;
       this.tracerService.sendData(spanInst, bh);
@@ -1785,6 +1818,145 @@ export class Auth {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_bDxNmjojBfqsvXv6');
+    }
+  }
+
+  async sd_OtvxdLa2NZsZVb18(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_OtvxdLa2NZsZVb18',
+      parentSpanInst
+    );
+    try {
+      bh.search = {
+        collection: 'users',
+        query: { email: bh.input.body.email },
+      };
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_fkb1mA27R8OV5gSB(bh, parentSpanInst);
+      //appendnew_next_sd_OtvxdLa2NZsZVb18
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_OtvxdLa2NZsZVb18',
+        spanInst,
+        'sd_OtvxdLa2NZsZVb18'
+      );
+    }
+  }
+
+  async sd_fkb1mA27R8OV5gSB(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_fkb1mA27R8OV5gSB',
+      parentSpanInst
+    );
+    try {
+      let outputVariables = await this.checkIfExist(spanInst, bh.search);
+      bh.result = outputVariables.local.result;
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_f9jOqikuEkCIqV8M(bh, parentSpanInst);
+      //appendnew_next_sd_fkb1mA27R8OV5gSB
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_fkb1mA27R8OV5gSB',
+        spanInst,
+        'sd_fkb1mA27R8OV5gSB'
+      );
+    }
+  }
+
+  async sd_f9jOqikuEkCIqV8M(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_f9jOqikuEkCIqV8M',
+      parentSpanInst
+    );
+    try {
+      if (
+        this.sdService.operators['nempty'](
+          bh.result,
+          undefined,
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sd_ATzfjg9wzAe0jnuZ(bh, parentSpanInst);
+      } else {
+        bh = await this.sd_AeLlhPH9pK8UtcH6(bh, parentSpanInst);
+      }
+      this.tracerService.sendData(spanInst, bh);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_f9jOqikuEkCIqV8M',
+        spanInst,
+        'sd_f9jOqikuEkCIqV8M'
+      );
+    }
+  }
+
+  async sd_ATzfjg9wzAe0jnuZ(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_ATzfjg9wzAe0jnuZ',
+      parentSpanInst
+    );
+    try {
+      bh.result = {
+        message: 'User exist',
+      };
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_xzwrMwrujTNxPuql(bh, parentSpanInst);
+      //appendnew_next_sd_ATzfjg9wzAe0jnuZ
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_ATzfjg9wzAe0jnuZ',
+        spanInst,
+        'sd_ATzfjg9wzAe0jnuZ'
+      );
+    }
+  }
+
+  async sd_xzwrMwrujTNxPuql(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send(bh.result);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_xzwrMwrujTNxPuql');
+    }
+  }
+
+  async sd_AeLlhPH9pK8UtcH6(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_AeLlhPH9pK8UtcH6',
+      parentSpanInst
+    );
+    try {
+      bh.result = {
+        message: 'Dont exist',
+      };
+      this.tracerService.sendData(spanInst, bh);
+      await this.sd_xzwrMwrujTNxPuql(bh, parentSpanInst);
+      //appendnew_next_sd_AeLlhPH9pK8UtcH6
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_AeLlhPH9pK8UtcH6',
+        spanInst,
+        'sd_AeLlhPH9pK8UtcH6'
+      );
     }
   }
 

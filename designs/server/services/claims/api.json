@@ -30,7 +30,6 @@
         "acceptFileUpload": false,
         "useDataModel": false,
         "dataModelIsArray": false,
-        "uploadFileOptions": "",
         "erd": "",
         "erdName": "",
         "entity": "",
@@ -50,7 +49,7 @@
         "y": 40,
         "wires": [
             [
-                "sd_1MsfAovHQUCkaNDE"
+                "sd_NlYVbTW63Hleg2OU"
             ]
         ],
         "__ssdTypeInputs__": {
@@ -65,7 +64,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_zm2vJ5zZBorn8Iq1"
+        "functionName": "sd_zm2vJ5zZBorn8Iq1",
+        "generated": false
     },
     {
         "id": "sd_1MsfAovHQUCkaNDE",
@@ -74,7 +74,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "bh.collection = \"claims\";\nbh.input.body.date = new Date();",
+        "script": "bh.payload = bh.input.body\n\nbh.count  = bh.found.length + 1\n\nbh.claimNo = bh.input.body.claimNumber + '-' + bh.count\n\nconsole.log(\"CLAIM NO: \", bh.claimNo)\n\nbh.payload.claimNumber = bh.claimNo\n\nbh.collection = \"claims\";\nbh.payload.date = new Date();\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n",
         "functionName": "sd_1MsfAovHQUCkaNDE",
         "category": "Function",
         "x": 150,
@@ -119,7 +119,7 @@
         "yAxis": "",
         "indexes": "",
         "docs": "",
-        "document": "bh.input.body",
+        "document": "bh.payload",
         "newName": "",
         "doc": "",
         "filePath": "",
@@ -156,8 +156,8 @@
                 "constant": false
             },
             "document": {
-                "type": "bh.input",
-                "value": "body",
+                "type": "bh",
+                "value": "payload",
                 "constant": false
             }
         },
@@ -273,7 +273,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ZvXZqmFrqvDEaIAA"
+        "functionName": "sd_ZvXZqmFrqvDEaIAA",
+        "generated": false
     },
     {
         "id": "sd_UQ2eF4vSY8PN9bLM",
@@ -446,6 +447,7 @@
         "acceptFileUpload": false,
         "useDataModel": false,
         "dataModelIsArray": false,
+        "uploadFileOptions": "",
         "erd": "",
         "erdName": "",
         "entity": "",
@@ -480,7 +482,8 @@
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "api",
-        "functionName": "sd_ny8fhj561jXDwL1n"
+        "functionName": "sd_ny8fhj561jXDwL1n",
+        "generated": false
     },
     {
         "id": "sd_8vgHhVtnSlWdusUK",
@@ -699,9 +702,9 @@
             ]
         ],
         "__n_excludedFromValidation__": {},
+        "generated": true,
         "generateNext": false,
-        "serviceName": "api",
-        "generated": true
+        "serviceName": "api"
     },
     {
         "id": "sd_j5bgewAfqB0ztWa4",
@@ -729,5 +732,115 @@
         "generateNext": false,
         "serviceName": "api",
         "generated": true
+    },
+    {
+        "id": "sd_PGqPZiORcKSqjFNP",
+        "type": "CallService",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 1,
+        "isValidNode": true,
+        "noerr": 0,
+        "service": {
+            "id": "SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL",
+            "type": "tab",
+            "createdDate": "2024-08-18T11:10:02.741Z",
+            "label": "Auth",
+            "disabled": false,
+            "info": "",
+            "functionSeq": 0
+        },
+        "flow": {
+            "flowId": "sd_HQW7MlXCfXknBjYn",
+            "flowName": "checkIfExist"
+        },
+        "inputVariables": [
+            {
+                "key": "searchObj",
+                "map": true,
+                "valueType": "bh",
+                "value": "search"
+            }
+        ],
+        "bhVariables": [],
+        "outputMapping": [
+            {
+                "mapVarType": "local",
+                "key": "result",
+                "valueType": "bh",
+                "value": "found",
+                "mapVarName": "result",
+                "localVar": "bh.found"
+            }
+        ],
+        "callService": "../Auth",
+        "startName": "checkIfExist",
+        "inputParams": [
+            "bh.search"
+        ],
+        "accept_bh": false,
+        "functionName": "sd_PGqPZiORcKSqjFNP",
+        "category": "General",
+        "x": 265,
+        "y": 80,
+        "wires": [
+            [
+                "sd_1MsfAovHQUCkaNDE"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_NlYVbTW63Hleg2OU",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.policyNo = bh.input.body.claimNumber.split(\"-\")[1]\n\nconsole.log(\"POLICY NO: \", bh.policyNo)\n\nbh.search = {\n    collection: \"claims\",\n    query: {policyNo: Number(bh.policyNo)}\n}\n\nconsole.log(\"SEARCH: \", bh.search)",
+        "functionName": "sd_NlYVbTW63Hleg2OU",
+        "category": "Function",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "sd_PGqPZiORcKSqjFNP"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_T1aANLKlVIXujev4",
+        "type": "ServerLog",
+        "z": "SSD_SERVICE_ID_sd_5O2XRvSS7gzsgXN7",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 0,
+        "logObject": "bh.found",
+        "logLevel": "info",
+        "functionName": "sd_T1aANLKlVIXujev4",
+        "category": "General",
+        "x": 405,
+        "y": 200,
+        "wires": [],
+        "__ssdTypeInputs__": {
+            "logObject": {
+                "type": "bh",
+                "value": "found",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "api"
     }
 ]

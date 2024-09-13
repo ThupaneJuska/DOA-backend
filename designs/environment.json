@@ -34,7 +34,7 @@
             "webAppMountpoint": "web",
             "CLOCK_TOLERANCE": "5",
             "NGFORAGE_MOBILE_DRIVER": "INDEXED_DB",
-            "deadOrAliveDB": "mongodb://localhost:27017/DeadOrAlive",
+            "deadOrAliveDB": "mongodb://0.0.0.0:27017/DeadOrAlive",
             "gmail_userid": "edwardthupane80@gmail.com",
             "gmail_appPassword": "jimz ysri ffqn ctik"
         }
@@ -54,7 +54,7 @@
             "webAppMountpoint": "web",
             "CLOCK_TOLERANCE": "5",
             "NGFORAGE_MOBILE_DRIVER": "INDEXED_DB",
-            "deadOrAliveDB": "mongodb://localhost:27017/DeadOrAlive",
+            "deadOrAliveDB": "mongodb://0.0.0.0:27017/DeadOrAlive",
             "gmail_userid": "edwardthupane80@gmail.com",
             "gmail_appPassword": "jimz ysri ffqn ctik"
         }

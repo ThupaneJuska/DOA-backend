@@ -9,6 +9,7 @@ import { TracerService } from '../../services/TracerService'; //_splitter_
 import log from '../../utils/Logger'; //_splitter_
 import { EmailOutService } from '../../utils/ndefault-email/EmailOut/EmailOutService'; //_splitter_
 import { MongoPersistance } from '../../utils/ndefault-mongodb/Mongodb/MongoPersistance'; //_splitter_
+import * as SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL from '../Auth'; //_splitter_
 //append_imports_end
 export class messages {
   private sdService = new SDBaseService();
@@ -228,7 +229,7 @@ export class messages {
             next
           );
           let parentSpanInst = null;
-          bh = await this.sd_UwucIuNhVjc0AW8Q(bh, parentSpanInst);
+          bh = await this.sd_DKwLPnQAX18B2Cig(bh, parentSpanInst);
           //appendnew_next_sd_EEbUh8ZIwv9kX4cj
         } catch (e) {
           return await this.errorHandler(bh, e, 'sd_EEbUh8ZIwv9kX4cj');
@@ -596,6 +597,67 @@ export class messages {
     }
   }
 
+  async sd_DKwLPnQAX18B2Cig(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_DKwLPnQAX18B2Cig',
+      parentSpanInst
+    );
+    try {
+      bh.policyNo = bh.input.body.claimNumber.split('-')[1];
+
+      console.log('POLICY NO: ', bh.policyNo);
+
+      bh.search = {
+        collection: 'claims',
+        query: { policyNo: Number(bh.policyNo) },
+      };
+
+      console.log('SEARCH: ', bh.search);
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_zJuCFM2adUvEl5rg(bh, parentSpanInst);
+      //appendnew_next_sd_DKwLPnQAX18B2Cig
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_DKwLPnQAX18B2Cig',
+        spanInst,
+        'sd_DKwLPnQAX18B2Cig'
+      );
+    }
+  }
+
+  async sd_zJuCFM2adUvEl5rg(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_zJuCFM2adUvEl5rg',
+      parentSpanInst
+    );
+    try {
+      const SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance: SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth =
+        SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth.getInstance();
+      let outputVariables =
+        await SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance.checkIfExist(
+          spanInst,
+          bh.search
+        );
+      bh.found = outputVariables.local.result;
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_UwucIuNhVjc0AW8Q(bh, parentSpanInst);
+      //appendnew_next_sd_zJuCFM2adUvEl5rg
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_zJuCFM2adUvEl5rg',
+        spanInst,
+        'sd_zJuCFM2adUvEl5rg'
+      );
+    }
+  }
+
   async sd_UwucIuNhVjc0AW8Q(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
       'sd_UwucIuNhVjc0AW8Q',
@@ -604,9 +666,16 @@ export class messages {
     try {
       bh.payload = bh.input.body;
 
+      bh.count = bh.found.length + 1;
+
+      bh.claimNo = bh.input.body.claimNumber + '-' + bh.count;
+
+      console.log('CLAIM NO: ', bh.claimNo);
+
       console.log('PAYLOAD:', bh.payload);
 
       bh.payload.date = new Date();
+      bh.payload.claimNumber = bh.claimNo;
 
       console.log('PAYLOAD:', bh.payload);
 
