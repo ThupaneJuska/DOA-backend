@@ -1143,6 +1143,7 @@ export class Auth {
       const hashedPassword = await bcrypt.hash(bh.input.body['password'], 10);
       bh.sendPassword = bh.input.body.password;
       bh.input.body['password'] = hashedPassword;
+      bh.input.body['policyActive'] = true;
       bh.input.body['registeredDate'] = new Date().toLocaleDateString();
       bh.body = bh.input.body;
       this.tracerService.sendData(spanInst, bh);
