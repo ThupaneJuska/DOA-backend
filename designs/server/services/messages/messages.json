@@ -1013,7 +1013,7 @@
         "y": 720,
         "wires": [
             [
-                "sd_UwucIuNhVjc0AW8Q"
+                "sd_DKwLPnQAX18B2Cig"
             ]
         ],
         "__ssdTypeInputs__": {
@@ -1037,10 +1037,10 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "bh.payload = bh.input.body\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n\nbh.payload.date = new Date()\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n\nbh.collection = \"notifications\"\n",
+        "script": "bh.payload = bh.input.body\n\nbh.count  = bh.found.length + 1\n\nbh.claimNo = bh.input.body.claimNumber + '-' + bh.count\n\nconsole.log(\"CLAIM NO: \", bh.claimNo)\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n\nbh.payload.date = new Date()\nbh.payload.claimNumber = bh.claimNo\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n\nbh.collection = \"notifications\"\n",
         "functionName": "sd_UwucIuNhVjc0AW8Q",
         "category": "Function",
-        "x": 200,
+        "x": 305,
         "y": 720,
         "wires": [
             [
@@ -1090,7 +1090,7 @@
         "pipeline": "",
         "functionName": "sd_PMOqn0slfFmzCs6L",
         "category": "Storage",
-        "x": 325,
+        "x": 385,
         "y": 720,
         "wires": [
             [
@@ -1595,12 +1595,122 @@
         },
         "functionName": "sd_ze33lefA6oP4w15c",
         "category": "HTTP",
-        "x": 465,
+        "x": 445,
         "y": 1000,
         "wires": [],
         "__n_excludedFromValidation__": {},
         "generateNext": false,
         "serviceName": "messages",
         "generated": true
+    },
+    {
+        "id": "sd_zJuCFM2adUvEl5rg",
+        "type": "CallService",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 1,
+        "isValidNode": true,
+        "noerr": 0,
+        "service": {
+            "id": "SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL",
+            "type": "tab",
+            "createdDate": "2024-08-18T11:10:02.741Z",
+            "label": "Auth",
+            "disabled": false,
+            "info": "",
+            "functionSeq": 0
+        },
+        "flow": {
+            "flowId": "sd_HQW7MlXCfXknBjYn",
+            "flowName": "checkIfExist"
+        },
+        "inputVariables": [
+            {
+                "key": "searchObj",
+                "map": true,
+                "valueType": "bh",
+                "value": "search"
+            }
+        ],
+        "bhVariables": [],
+        "outputMapping": [
+            {
+                "mapVarType": "local",
+                "key": "result",
+                "valueType": "bh",
+                "value": "found",
+                "mapVarName": "result",
+                "localVar": "bh.found"
+            }
+        ],
+        "callService": "../Auth",
+        "startName": "checkIfExist",
+        "inputParams": [
+            "bh.search"
+        ],
+        "accept_bh": false,
+        "functionName": "sd_zJuCFM2adUvEl5rg",
+        "category": "General",
+        "x": 225,
+        "y": 720,
+        "wires": [
+            [
+                "sd_UwucIuNhVjc0AW8Q"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_DKwLPnQAX18B2Cig",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.policyNo = bh.input.body.claimNumber.split(\"-\")[1]\n\nconsole.log(\"POLICY NO: \", bh.policyNo)\n\nbh.search = {\n    collection: \"claims\",\n    query: {policyNo: Number(bh.policyNo)}\n}\n\nconsole.log(\"SEARCH: \", bh.search)",
+        "functionName": "sd_DKwLPnQAX18B2Cig",
+        "category": "Function",
+        "x": 140,
+        "y": 720,
+        "wires": [
+            [
+                "sd_zJuCFM2adUvEl5rg"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "messages",
+        "generated": true
+    },
+    {
+        "id": "sd_PTYYL5PLnXzovmrY",
+        "type": "ServerLog",
+        "z": "SSD_SERVICE_ID_sd_hebxVU7E4NfTBifC",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 0,
+        "logObject": "bh.found",
+        "logLevel": "info",
+        "functionName": "sd_PTYYL5PLnXzovmrY",
+        "category": "General",
+        "x": 405,
+        "y": 800,
+        "wires": [],
+        "__ssdTypeInputs__": {
+            "logObject": {
+                "type": "bh",
+                "value": "found",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "messages"
     }
 ]

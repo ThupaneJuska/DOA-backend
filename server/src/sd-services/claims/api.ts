@@ -101,7 +101,7 @@ export class api {
             next
           );
           let parentSpanInst = null;
-          bh = await this.sd_1MsfAovHQUCkaNDE(bh, parentSpanInst);
+          bh = await this.sd_NlYVbTW63Hleg2OU(bh, parentSpanInst);
           //appendnew_next_sd_zm2vJ5zZBorn8Iq1
         } catch (e) {
           return await this.errorHandler(bh, e, 'sd_zm2vJ5zZBorn8Iq1');
@@ -183,14 +183,88 @@ export class api {
 
   //appendnew_flow_api_start
 
+  async sd_NlYVbTW63Hleg2OU(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_NlYVbTW63Hleg2OU',
+      parentSpanInst
+    );
+    try {
+      bh.policyNo = bh.input.body.claimNumber.split('-')[1];
+
+      console.log('POLICY NO: ', bh.policyNo);
+
+      bh.search = {
+        collection: 'claims',
+        query: { policyNo: Number(bh.policyNo) },
+      };
+
+      console.log('SEARCH: ', bh.search);
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_PGqPZiORcKSqjFNP(bh, parentSpanInst);
+      //appendnew_next_sd_NlYVbTW63Hleg2OU
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_NlYVbTW63Hleg2OU',
+        spanInst,
+        'sd_NlYVbTW63Hleg2OU'
+      );
+    }
+  }
+
+  async sd_PGqPZiORcKSqjFNP(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_PGqPZiORcKSqjFNP',
+      parentSpanInst
+    );
+    try {
+      const SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance: SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth =
+        SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSL.Auth.getInstance();
+      let outputVariables =
+        await SSD_SERVICE_ID_sd_qcsHvGUKUKU7RTSLInstance.checkIfExist(
+          spanInst,
+          bh.search
+        );
+      bh.found = outputVariables.local.result;
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_1MsfAovHQUCkaNDE(bh, parentSpanInst);
+      //appendnew_next_sd_PGqPZiORcKSqjFNP
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_PGqPZiORcKSqjFNP',
+        spanInst,
+        'sd_PGqPZiORcKSqjFNP'
+      );
+    }
+  }
+
   async sd_1MsfAovHQUCkaNDE(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
       'sd_1MsfAovHQUCkaNDE',
       parentSpanInst
     );
     try {
+      bh.payload = bh.input.body;
+
+      bh.count = bh.found.length + 1;
+
+      bh.claimNo = bh.input.body.claimNumber + '-' + bh.count;
+
+      console.log('CLAIM NO: ', bh.claimNo);
+
+      bh.payload.claimNumber = bh.claimNo;
+
       bh.collection = 'claims';
-      bh.input.body.date = new Date();
+      bh.payload.date = new Date();
+
+      console.log('PAYLOAD:', bh.payload);
+
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_CfzW0EE3u9aX9DmX(bh, parentSpanInst);
       //appendnew_next_sd_1MsfAovHQUCkaNDE
@@ -215,7 +289,7 @@ export class api {
       bh.result = await MongoPersistance.getInstance().insertOne(
         'sd_PhRLzlckwjzX0TdC',
         bh.collection,
-        bh.input.body,
+        bh.payload,
         bh.options,
         bh.options
       );
