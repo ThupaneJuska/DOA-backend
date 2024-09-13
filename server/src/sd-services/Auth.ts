@@ -441,7 +441,7 @@ export class Auth {
     );
 
     this.app['post'](
-      `${this.serviceBasePath}/check-user-email`,
+      `${this.serviceBasePath}/checkUser`,
       cookieParser(),
       this.sdService.getMiddlesWaresBySequenceId(
         null,
@@ -471,6 +471,7 @@ export class Auth {
         this.generatedMiddlewares
       )
     );
+<<<<<<< HEAD
 
     this.app['post'](
       `${this.serviceBasePath}/check-user-id`,
@@ -572,6 +573,8 @@ export class Auth {
         this.generatedMiddlewares
       )
     );
+=======
+>>>>>>> 0989ba60e3aaf57b8be03e1a3675c1089a04d794
     //appendnew_flow_Auth_HttpIn
   }
   //   service flows_Auth
@@ -2187,6 +2190,7 @@ export class Auth {
     }
   }
 
+<<<<<<< HEAD
   async sd_AMqvcHUQpIN0vpwx(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
       'sd_AMqvcHUQpIN0vpwx',
@@ -2451,6 +2455,8 @@ export class Auth {
     }
   }
 
+=======
+>>>>>>> 0989ba60e3aaf57b8be03e1a3675c1089a04d794
   //appendnew_node
 
   // error_handler_slot
