@@ -490,7 +490,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "const updateData = { ...bh.input.body };\n\nbh.filter = {\"claimNumber\": updateData.claimNumber}\nbh.collection = \"claims\"\n\nbh.search = {\n    ...bh.filter,\n    \"collection\": \"claims\"\n}\n\nconsole.log(\"SEARCH: \", bh.search)\n\nupdateData.status = updateData.deceased.status\ndelete updateData.deceased.status\ndelete updateData._id\n\nbh.body = {$set: updateData}\n\nconsole.log(\"UPDATED DATA: \", bh.body)\nconsole.log(\"Filter: \", bh.filter)",
+        "script": "const updateData = { ...bh.input.body };\n\nbh.filter = {\"claimNumber\": updateData.claimNumber}\nbh.collection = \"claims\"\n\nbh.search = {\n    ...bh.filter,\n    \"collection\": \"claims\"\n}\n\nconsole.log(\"SEARCH: \", bh.search)\n\nupdateData.status = bh.input.body.status\ndelete updateData.deceased.status\ndelete updateData._id\n\nbh.body = {$set: updateData}\n\nconsole.log(\"UPDATED DATA: \", bh.body)\nconsole.log(\"Filter: \", bh.filter)",
         "functionName": "sd_8vgHhVtnSlWdusUK",
         "category": "Function",
         "x": 145,

@@ -1175,7 +1175,7 @@ export class Auth {
         bh.option
       );
       this.tracerService.sendData(spanInst, bh);
-      bh = await this.sendEmail(bh, parentSpanInst);
+      bh = await this.sd_85BlvimTeB7bJcc9(bh, parentSpanInst);
       //appendnew_next_sd_9Gv4mFF6jdv5uacF
       return bh;
     } catch (e) {
@@ -1189,6 +1189,54 @@ export class Auth {
     }
   }
 
+  async sd_85BlvimTeB7bJcc9(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_85BlvimTeB7bJcc9',
+      parentSpanInst
+    );
+    try {
+      if (
+        this.sdService.operators['eq'](
+          bh.input.body['packageType'],
+          'Package 1',
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sendEmail(bh, parentSpanInst);
+      } else if (
+        this.sdService.operators['eq'](
+          bh.input.body['packageType'],
+          'Package 2',
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sendEmail2(bh, parentSpanInst);
+      } else if (
+        this.sdService.operators['eq'](
+          bh.input.body['packageType'],
+          'Package 3',
+          undefined,
+          undefined
+        )
+      ) {
+        bh = await this.sendEmail3(bh, parentSpanInst);
+      }
+      this.tracerService.sendData(spanInst, bh);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_85BlvimTeB7bJcc9',
+        spanInst,
+        'sd_85BlvimTeB7bJcc9'
+      );
+    }
+  }
+
   async sendEmail(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan('sendEmail', parentSpanInst);
     try {
@@ -1197,8 +1245,14 @@ export class Auth {
         to: bh.input.body.email,
         subject: 'Dead Or Alive Client Registered',
         from: 'DOAServices',
-        ptag: `<p>Your registration with DOA was successful.</p>
-    <p>Your Password to login is: ${bh.sendPassword}</p>
+        ptag: `
+    <section style="background:black;padding:5px">
+       <p style="border:1px solid black; padding:10px; text-align:center; font-size:1.7em; background:#f7dd71;color:#124e52"><strong>Your registration with DOA was successful.</strong></p>
+       <p style="color:white">Your Email to login is: <i><strong>${bh.input.body.email}</strong></i></p>
+       <p style="color:white">Your Password to login is: <i><strong>${bh.sendPassword}</strong></i></p>
+       <p style="color:white">PLEASE CLICK THE IMAGE BELOW TO VIEW PLAN</p>
+       <a href="http://localhost:8081/api/download-plan/856ff00425d0fbcd75d1aa050f544d79"><img src="https://demeter-im.com/wp-content/uploads/plan-a-002.jpg" width="200px" height="100px" style="border:1px solid black"></a>
+    </section>
     `,
       };
       this.tracerService.sendData(spanInst, bh);
@@ -1255,7 +1309,7 @@ export class Auth {
           contentOptions: undefined,
           securityOptions: undefined,
           headerOptions: undefined,
-          attachments: [],
+          attachments: undefined,
         }
       );
       this.tracerService.sendData(spanInst, bh);
@@ -1269,6 +1323,78 @@ export class Auth {
         'sd_ddrss31Z9FJ8M00y',
         spanInst,
         'sd_ddrss31Z9FJ8M00y'
+      );
+    }
+  }
+
+  async sendEmail2(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sendEmail2',
+      parentSpanInst
+    );
+    try {
+      bh.status = 200;
+      bh.payload = {
+        to: bh.input.body.email,
+        subject: 'Dead Or Alive Client Registered',
+        from: 'DOAServices',
+        ptag: `
+    <mat-card>
+       <p style="border:1px solid black; padding:10px; text-align:center; font-size:1.7em; background:#f7dd71;color:#124e52"><strong>Your registration with DOA was successful.</strong></p>
+       <p>Your Email to login is: <i><strong>${bh.input.body.email}</strong></i></p>
+       <p>Your Password to login is: <i><strong>${bh.sendPassword}</strong></i></p>
+       <p>PLEASE CLICK THE IMAGE BELOW TO VIEW PLAN</p>
+       <a href="http://localhost:8081/api/download-plan/66297e37cbf2c9db5d58ca5974fd0ac4"><img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/2261/brand.gif?itok=MtbvHgy5" width="200px" height="100px" style="border:1px solid black"></a>
+    </mat-card>
+    `,
+      };
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_ddrss31Z9FJ8M00y(bh, parentSpanInst);
+      //appendnew_next_sendEmail2
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_HUpWqZP7EFBB0N0a',
+        spanInst,
+        'sendEmail2'
+      );
+    }
+  }
+
+  async sendEmail3(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sendEmail3',
+      parentSpanInst
+    );
+    try {
+      bh.status = 200;
+      bh.payload = {
+        to: bh.input.body.email,
+        subject: 'Dead Or Alive Client Registered',
+        from: 'DOAServices',
+        ptag: `
+    <mat-card>
+       <p style="border:1px solid black; padding:10px; text-align:center; font-size:1.7em; background:#f7dd71;color:#124e52"><strong>Your registration with DOA was successful.</strong></p>
+       <p>Your Email to login is: <i><strong>${bh.input.body.email}</strong></i></p>
+       <p>Your Password to login is: <i><strong>${bh.sendPassword}</strong></i></p>
+       <p>PLEASE CLICK THE IMAGE BELOW TO VIEW PLAN</p>
+       <a href="http://localhost:8081/api/download-plan/d3b970dbffe9463153d71aaa62d1d7a2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDO8hlC8Y0aDDEtZeBW4a_MdhvPgorGWYKwA&s" width="200px" height="150px" style="border:1px solid black"></a>
+    </mat-card>
+    `,
+      };
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_ddrss31Z9FJ8M00y(bh, parentSpanInst);
+      //appendnew_next_sendEmail3
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_cn7DGy62S0kvXied',
+        spanInst,
+        'sendEmail3'
       );
     }
   }
@@ -1812,7 +1938,7 @@ export class Auth {
 
   async sd_bDxNmjojBfqsvXv6(bh, parentSpanInst) {
     try {
-      bh.web.res.set({ 'Content-Type': 'image/png' });
+      bh.web.res.set({ 'Content-Type': 'application/pdf' });
 
       bh.result.downloadStream.pipe(bh.web.res);
       return bh;
