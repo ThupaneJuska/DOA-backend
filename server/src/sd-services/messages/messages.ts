@@ -666,7 +666,7 @@ export class messages {
     try {
       bh.payload = bh.input.body;
 
-      bh.count = bh.found.length + 1;
+      bh.count = bh.found.length;
 
       bh.claimNo = bh.input.body.claimNumber + '-' + bh.count;
 
