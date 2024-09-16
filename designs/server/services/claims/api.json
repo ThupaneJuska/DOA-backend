@@ -74,10 +74,10 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "bh.payload = bh.input.body\n\nbh.count  = bh.found.length + 1\n\nbh.claimNo = bh.input.body.claimNumber + '-' + bh.count\n\nconsole.log(\"CLAIM NO: \", bh.claimNo)\n\nbh.payload.claimNumber = bh.claimNo\n\nbh.collection = \"claims\";\nbh.payload.date = new Date();\n\nconsole.log(\"PAYLOAD:\", bh.payload)\n",
+        "script": "bh.payload = bh.input.body\n\nbh.count  = bh.found.length + 1\n\nbh.claimNo = bh.input.body.claimNumber + '-' + bh.count\n\nconsole.log(\" THIS IS CLAIMS'S,  CLAIM NO: \", bh.claimNo)\n\nbh.payload.claimNumber = bh.claimNo\n\nbh.collection = \"claims\";\nbh.payload.date = new Date();\n\nconsole.log(\"THIS IS CLAIMS'S PAYLOAD:\", bh.payload)\n",
         "functionName": "sd_1MsfAovHQUCkaNDE",
         "category": "Function",
-        "x": 150,
+        "x": 345,
         "y": 40,
         "wires": [
             [
@@ -127,7 +127,7 @@
         "pipeline": "",
         "functionName": "sd_CfzW0EE3u9aX9DmX",
         "category": "Storage",
-        "x": 225,
+        "x": 425,
         "y": 40,
         "wires": [
             [
@@ -211,7 +211,7 @@
         },
         "functionName": "sd_bFUKlYs5aDknVhst",
         "category": "HTTP",
-        "x": 310,
+        "x": 505,
         "y": 40,
         "wires": [],
         "__n_excludedFromValidation__": {},
@@ -781,8 +781,8 @@
         "accept_bh": false,
         "functionName": "sd_PGqPZiORcKSqjFNP",
         "category": "General",
-        "x": 265,
-        "y": 80,
+        "x": 245,
+        "y": 40,
         "wires": [
             [
                 "sd_1MsfAovHQUCkaNDE"
@@ -803,8 +803,8 @@
         "script": "bh.policyNo = bh.input.body.claimNumber.split(\"-\")[1]\n\nconsole.log(\"POLICY NO: \", bh.policyNo)\n\nbh.search = {\n    collection: \"claims\",\n    query: {policyNo: Number(bh.policyNo)}\n}\n\nconsole.log(\"SEARCH: \", bh.search)",
         "functionName": "sd_NlYVbTW63Hleg2OU",
         "category": "Function",
-        "x": 180,
-        "y": 80,
+        "x": 165,
+        "y": 40,
         "wires": [
             [
                 "sd_PGqPZiORcKSqjFNP"

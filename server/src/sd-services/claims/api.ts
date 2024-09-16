@@ -256,14 +256,14 @@ export class api {
 
       bh.claimNo = bh.input.body.claimNumber + '-' + bh.count;
 
-      console.log('CLAIM NO: ', bh.claimNo);
+      console.log(" THIS IS CLAIMS'S,  CLAIM NO: ", bh.claimNo);
 
       bh.payload.claimNumber = bh.claimNo;
 
       bh.collection = 'claims';
       bh.payload.date = new Date();
 
-      console.log('PAYLOAD:', bh.payload);
+      console.log("THIS IS CLAIMS'S PAYLOAD:", bh.payload);
 
       this.tracerService.sendData(spanInst, bh);
       bh = await this.sd_CfzW0EE3u9aX9DmX(bh, parentSpanInst);
